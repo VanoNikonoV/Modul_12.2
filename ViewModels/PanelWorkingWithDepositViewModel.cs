@@ -88,12 +88,7 @@ namespace Modul_13.ViewModels
 
         public RelayCommand<string> MakeTransfer => makeTransfer ?? (makeTransfer = new RelayCommand<string>(TransferExecuted, CanMakeTransfer));
 
-        //private RelayCommand addNoDepositCommand = null;
-        ///// <summary>
-        ///// Команда добавление Недпозитного счета для выбранного клиента
-        ///// </summary>
-        //public RelayCommand AddNoDepositCommand =>
-        //    addDepositCommand ?? (addNoDepositCommand = new RelayCommand(AddNoDeposit, CanAddDeposit));
+       
         #endregion
 
         #region Методы для работы со счетами
@@ -130,7 +125,7 @@ namespace Modul_13.ViewModels
             }
             else { MessageBox.Show("Нужно ввсети число"); }
         }
-
+        //Используя ковариантный интерфейс, реализуйте методы пополнения счёта по соответствующему типу.
         private void TopUpAccount(string sum)
         {
             decimal amount;

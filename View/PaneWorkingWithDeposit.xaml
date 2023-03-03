@@ -100,6 +100,7 @@
         <TextBlock Text="На депозитном счёте:" FontSize="18" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Bottom" FontWeight="Bold"/>
+        
         <TextBox    FontSize="18" Width="200" Cursor="No"
                     Grid.Column="0" Grid.Row="1"
                     HorizontalAlignment="Center" 
@@ -112,9 +113,13 @@
                     RelativeSource={RelativeSource AncestorType={x:Type Page}, 
                     Mode=FindAncestor}, 
                     UpdateSourceTrigger=PropertyChanged}"/>
+        
+        <Button Content="Пополнить" Width="150" Command=""/>
+        
         <TextBlock Text="На недепозитном счёте:" FontSize="18" 
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Bottom" FontWeight="Bold"/>
+        
         <TextBox    FontSize="18" Width="200" Cursor="No"
                     Grid.Column="0" Grid.Row="1"
                     HorizontalAlignment="Center" 

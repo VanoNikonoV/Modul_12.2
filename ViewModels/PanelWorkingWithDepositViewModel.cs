@@ -137,7 +137,7 @@ namespace Modul_13.ViewModels
 
             if (Decimal.TryParse(sum, out amount))
             {
-                this.Sender.Deposit.MakeDeposit(amount, DateTime.Now, $"Пополенение: {sum}");
+                this.Sender.Accounts[0].MakeDeposit(amount, DateTime.Now, $"Пополенение: {sum}");
 
                 SumTransfer.Text = "";
             }

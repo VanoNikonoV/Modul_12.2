@@ -59,7 +59,6 @@ namespace Modul_13.Models
 
                 this.Add(new BankClient<Account> (_c)); 
             }
-            this[0].Deposit = new DepositAccount(100, 10);
         }
 
        

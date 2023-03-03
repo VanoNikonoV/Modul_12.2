@@ -52,7 +52,7 @@ namespace Modul_13.Models
 
                 temp.IsChanged = client.Owner.IsChanged;
 
-                clientsForConsultant.Add(new BankClient<Account>(temp, client.Deposit));
+                clientsForConsultant.Add(new BankClient<Account>(temp));
             }
 
             return clientsForConsultant;

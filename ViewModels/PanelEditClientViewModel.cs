@@ -91,20 +91,21 @@ namespace Modul_13.ViewModels
             editSeriesAndPassportNumberCommand ?? (editSeriesAndPassportNumberCommand
             = new RelayCommand<string>(EditSeriesAndPassportNumber, CanEdit));
 
-        private RelayCommand addDepositCommand = null;
+
+        private RelayCommand<string> addAccountCommand = null;
         /// <summary>
         /// Команда добавление ДЕПОЗИТНОГО счета для выбранного клиента 
         /// </summary>
-        public RelayCommand AddDepositCommand =>
-            addDepositCommand ?? (addDepositCommand = new RelayCommand(AddDeposit, CanAddDeposit));
+        public RelayCommand<string> AddAccountCommand =>
+            addAccountCommand ?? (addAccountCommand = new RelayCommand<string>(AddAccount, CanAddAccount));
 
-        private RelayCommand closeDepositCommand = null;
+
+        private RelayCommand<string> closeAccountCommand = null;
         /// <summary>
         /// Команда закрытия ДЕПОЗИТНОГО счета для выбранного клиента
         /// </summary>
-        public RelayCommand CloseDepositCommand =>
-            closeDepositCommand ?? (closeDepositCommand = new RelayCommand(CloseDeposit, CanCloseDeposit));
-
+        public RelayCommand<string> CloseAccountCommand =>
+            closeAccountCommand ?? (closeAccountCommand = new RelayCommand<string>(CloseAccount, CanCloseAccount));
 
         #endregion
 
@@ -253,27 +254,30 @@ namespace Modul_13.ViewModels
         /// <returns>
         /// true - если у выбранного клиента открыт счет
         /// false - если счет не открыт</returns></returns>
-        private bool CanCloseDeposit()
+        private bool CanCloseAccount(string selectedAccount)
         {
-            return CurrentClient?.Deposit != null ? true : false;
+            switch (selectedAccount)
+            {
+                case "Deposit":
+                   return CurrentClient?.Accounts[0] != null ? true : false;
+                case "NoDeposit":
+                   return CurrentClient?.Accounts[1] != null ? true : false;
+
+                    default: return false;
+            }   
         }
         /// <summary>
         /// Выполняет поиск клиента и в случаи совпадения удаляет счет
         /// </summary>
-        private void CloseDeposit()
+        private void CloseAccount(string selectedAccount)
         {
-            var Client = BankRepository.First(i => i == CurrentClient);
-
-            Client.CloseDeposit();
-
-            //this.CurrentAccount = null;
-        }
-       
-        private void AddNoDeposit()
-        {
-            //InterestNoEarningAccount account = new InterestEarningAccount(CurrentClient, 0);
-
-            //AccountsRepo.Add(account);
+            switch (selectedAccount)
+            {
+                case "Deposit":
+                    CurrentClient.CloseAccount(AccountType.Deposit); break;
+                case "NoDeposit":
+                    CurrentClient.CloseAccount(AccountType.NoDeposit); ; break;
+            }
         }
 
         /// <summary>
@@ -281,22 +285,37 @@ namespace Modul_13.ViewModels
         /// </summary>
         /// <returns>false - если у выбранного клиента отрыт счет
         ///          true - если счет не открыт</returns>
-        private bool CanAddDeposit()
+        private bool CanAddAccount(string selectedAccount)
         {
-            return CurrentClient?.Deposit != null ? false : true;
+            switch (selectedAccount)
+            {
+                case "Deposit":
+                    return CurrentClient?.Accounts[0] != null ? false : true;
+                case "NoDeposit":
+                    return CurrentClient?.Accounts[1] != null ? false :true ;
+
+                default: return false;
+            }
+
         }
         /// <summary>
         /// Добавление счета для выбранного клиента
         /// </summary>
-        private void AddDeposit()  //AddDeposit<T>(T CurrentClient) where T : Client
+        private void AddAccount(string selectedAccount)  //AddDeposit<T>(T CurrentClient) where T : Client
         {
-            int index = bankRepository.IndexOf(CurrentClient);
+            switch (selectedAccount)
+            {
+                case "Deposit":
 
-            CurrentClient.AddDeposit(100, 1);
+                    CurrentClient.AddAccount(AccountType.Deposit, 100, 1); break;
 
-            BankRepository.ReplaceDeposit(CurrentClient);
+                case "NoDeposit":
+
+                    CurrentClient.AddAccount(AccountType.NoDeposit, 100, 1); break;
+
+            }
+            //BankRepository.ReplaceDeposit(CurrentClient);
         }
-
         #endregion
     }
 }

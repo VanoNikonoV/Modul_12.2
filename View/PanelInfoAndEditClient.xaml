@@ -26,7 +26,7 @@
                            Grid.ColumnSpan="3" HorizontalAlignment="Center" 
                            VerticalAlignment="Bottom" FontWeight="Bold" Foreground="Black"/>
             <TextBox x:Name="EditName_TextBox" 
-                     FontSize="18" Width="135"
+                     FontSize="14" Width="135"
                      Text="{Binding Path=DataContext.Owner.FirstName, Mode=OneWay,
                      RelativeSource={RelativeSource AncestorType={x:Type Page}, 
                      Mode=FindAncestor}, 
@@ -218,15 +218,16 @@
             </Button>
 
         </Grid>
-
-        <Border Height="40" Width="200" 
+        <!--Открытие счет для выбранного клиента-->
+        <Border x:Name="borderDeposit" Uid="Deposit"
+                Height="40" Width="200" 
                 CornerRadius="20 20 20 20" 
                 Background="Black"
                 Margin="0 10"
                 ToolTip="Операции с депозитным счетом" 
                 DataContext="{Binding PanelEditClientViewModel,Mode=OneWay, 
                 RelativeSource={RelativeSource FindAncestor,
-                AncestorType={x:Type local:PanelInfoAndEditClient}}}">
+                AncestorType={x:Type local:PanelInfoAndEditClient}}}" >
 
             <StackPanel Height="30" Width="200" Orientation="Horizontal"
                             HorizontalAlignment="Center">
@@ -237,45 +238,52 @@
                 <materialDesign:PopupBox PlacementMode ="BottomAndAlignRightEdges"
                                              StaysOpen="False" Foreground="#FFFFF7F7"
                                              Width="35">
-                <StackPanel>
-                    <Button Content="Открыть счёт" 
-                                Command="{Binding AddDepositCommand}"/>
+                    <StackPanel>
+                        <Button Content="Открыть счёт" 
+                                Command="{Binding AddAccountCommand}"
+                                CommandParameter="{Binding Uid, ElementName=borderDeposit}"/>
 
                         <Button Content="Закрыть счёт"
-                                Command="{Binding CloseDepositCommand}"/>
+                                Command="{Binding CloseAccountCommand}"
+                                CommandParameter="{Binding Uid, ElementName=borderDeposit}"/>
 
                     </StackPanel>
                 </materialDesign:PopupBox>
             </StackPanel>
         </Border>
 
-        <!--Открытие счет для выбранного клиента--><!--
-        <Border Height="40" Width="210" 
-                            CornerRadius="10 10 10 10" 
-                            Background="Black"
-                            Margin="0 20">
+        <Border x:Name="borderNoDeposit" Uid="NoDeposit"
+                Height="40" Width="200" 
+                CornerRadius="20 20 20 20" 
+                Background="Black"
+                Margin="0 10"
+                ToolTip="Операции с недепозитным счетом" 
+                DataContext="{Binding PanelEditClientViewModel,Mode=OneWay, 
+                RelativeSource={RelativeSource FindAncestor,
+                AncestorType={x:Type local:PanelInfoAndEditClient}}}">
+
             <StackPanel Height="30" Width="200" Orientation="Horizontal"
                             HorizontalAlignment="Center">
 
-                <TextBlock Text="Депозитный счёт" 
-                               FontSize="16" Width="165"
-                               Padding="10 2 0 0 " Foreground="#FFFFFDFD"/>
+                <TextBlock Text="Недепозит. счёт" 
+                               FontSize="16" Width="160"
+                               Padding="10 2 0 0 " Foreground="#FFFFFDFD" FontWeight="Bold"/>
                 <materialDesign:PopupBox PlacementMode ="BottomAndAlignRightEdges"
                                              StaysOpen="False" Foreground="#FFFFF7F7"
                                              Width="35">
                     <StackPanel>
                         <Button Content="Открыть счёт" 
-                                            Command="{Binding DataContext.AddDepositCommand, 
-                                            RelativeSource={RelativeSource AncestorType={x:Type Window}, 
-                                            Mode=FindAncestor}}"/>
+                                Command="{Binding AddAccountCommand}"
+                                CommandParameter="{Binding Uid, ElementName=borderNoDeposit}"/>
 
                         <Button Content="Закрыть счёт"
-                                            Command="{Binding DataContext.CloseDepositCommand, 
-                                            RelativeSource={RelativeSource AncestorType={x:Type Window}, 
-                                            Mode=FindAncestor}}"/>
+                                Command="{Binding CloseAccountCommand}"
+                                CommandParameter="{Binding Uid, ElementName=borderNoDeposit}"/>
+
                     </StackPanel>
                 </materialDesign:PopupBox>
             </StackPanel>
-        </Border>-->
+        </Border>
+
     </StackPanel>
 </Page>

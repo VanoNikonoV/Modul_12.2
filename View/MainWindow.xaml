@@ -10,7 +10,7 @@
         xmlns:cmds="clr-namespace:Modul_13.Commands" 
         xmlns:view="clr-namespace:Modul_13.View"
         mc:Ignorable="d"
-        Height="800" Width="1250" WindowStyle="None" 
+        Height="900" Width="1250" WindowStyle="None" 
         AllowsTransparency="True" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>

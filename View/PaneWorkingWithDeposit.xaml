@@ -8,7 +8,7 @@
       xmlns:vm="clr-namespace:Modul_13.ViewModels"
       xmlns:cmds="clr-namespace:Modul_13.Commands" 
       mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="230">
+      d:DesignHeight="800" d:DesignWidth="230">
     
     <Page.Resources>
         <DataTemplate x:Key="Temp">
@@ -32,10 +32,10 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Имя" FontSize="18" 
-                           Grid.Column="0" Grid.Row="0"
-                           HorizontalAlignment="Center" 
-                           VerticalAlignment="Bottom" 
-                           FontWeight="Bold" Cursor="No" />
+                       Grid.Column="0" Grid.Row="0"
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Bottom" 
+                       FontWeight="Bold" Cursor="No" />
             <TextBox Text="{Binding Path=DataContext.Owner.FirstName, Mode=OneWay,
                      RelativeSource={RelativeSource AncestorType={x:Type Page}, 
                      Mode=FindAncestor}, 
@@ -106,12 +106,28 @@
                     VerticalAlignment="Center" 
                     Margin="0 10 0 10"
                     IsReadOnly="True"
-                    Text="{Binding Path=DataContext.Deposit.Balance, 
+                    Text="{Binding Path=DataContext.Accounts[0].Balance, 
                     StringFormat=C,ConverterCulture=ru-RU,Mode=OneWay,
                     FallbackValue=счет не открыт,
                     RelativeSource={RelativeSource AncestorType={x:Type Page}, 
                     Mode=FindAncestor}, 
                     UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Text="На недепозитном счёте:" FontSize="18" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Bottom" FontWeight="Bold"/>
+        <TextBox    FontSize="18" Width="200" Cursor="No"
+                    Grid.Column="0" Grid.Row="1"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Margin="0 10 0 10"
+                    IsReadOnly="True"
+                    Text="{Binding Path=DataContext.Accounts[1].Balance, 
+                    StringFormat=C,ConverterCulture=ru-RU,Mode=OneWay,
+                    FallbackValue=счет не открыт,
+                    RelativeSource={RelativeSource AncestorType={x:Type Page}, 
+                    Mode=FindAncestor}, 
+                    UpdateSourceTrigger=PropertyChanged}"/>
+        
                     
         <TextBlock Text="Выберите клиента для перевода:" FontSize="18" 
                    TextWrapping="Wrap" HorizontalAlignment="Center" 
@@ -126,7 +142,7 @@
             ScrollViewer.CanContentScroll="True"
             Width="190"
             IsSynchronizedWithCurrentItem="True" 
-            MinHeight="200" MaxHeight="240" 
+            MinHeight="240" MaxHeight="300" 
             SelectionChanged="SelectedRecipient">
             <!--Height="290"-->
             <ListView.ItemTemplate>

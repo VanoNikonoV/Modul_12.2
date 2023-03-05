@@ -301,7 +301,7 @@ namespace Modul_13.ViewModels
         /// <summary>
         /// Добавление счета для выбранного клиента
         /// </summary>
-        private void AddAccount(string selectedAccount)  //AddDeposit<T>(T CurrentClient) where T : Client
+        private void AddAccount(string selectedAccount) 
         {
             switch (selectedAccount)
             {

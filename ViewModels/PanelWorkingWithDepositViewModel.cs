@@ -1,4 +1,5 @@
 ﻿using Modul_13.Commands;
+using Modul_13.Interfases;
 using Modul_13.Models;
 using Modul_13.ViewModels.Base;
 using System;
@@ -88,11 +89,19 @@ namespace Modul_13.ViewModels
 
         public RelayCommand<string> MakeTransfer => makeTransfer ?? (makeTransfer = new RelayCommand<string>(TransferExecuted, CanMakeTransfer));
 
-       
+        private RelayCommand<string> topUpAccountCommand = null;
+        public RelayCommand<string> TopUpAccountCommand => topUpAccountCommand ?? (topUpAccountCommand = new RelayCommand<string>(TopUpAccountExecuted, CanTopUpAccount));
+
+        private bool CanTopUpAccount(string arg)
+        {
+            return true;
+        }
+
+
         #endregion
 
         #region Методы для работы со счетами
-     
+
         /// <summary>
         /// Корректность исходных данных для выполнения перевода
         /// </summary>
@@ -125,14 +134,23 @@ namespace Modul_13.ViewModels
             }
             else { MessageBox.Show("Нужно ввсети число"); }
         }
+
         //Используя ковариантный интерфейс, реализуйте методы пополнения счёта по соответствующему типу.
-        private void TopUpAccount(string sum)
+        //https://metanit.com/sharp/tutorial/3.27.php
+
+        private void TopUpAccountExecuted(string sum)
         {
             decimal amount;
 
             if (Decimal.TryParse(sum, out amount))
             {
-                this.Sender.Accounts[0].MakeDeposit(amount, DateTime.Now, $"Пополенение: {sum}");
+               // IAccount<Account> account = this.Sender.Accounts[0];
+                
+                var temp = this.Sender.Accounts[0] as IAccount<NoDepositAccount>;
+
+                temp.TopUp(amount);
+
+                //this.Sender.Accounts[0].MakeDeposit(amount, DateTime.Now, $"Пополенение: {sum}");
 
                 SumTransfer.Text = "";
             }

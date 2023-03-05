@@ -6,7 +6,9 @@ namespace Modul_13.Interfases
     // Используя ковариантный интерфейс, реализуйте методы пополнения счёта по соответствующему типу.
     public interface IAccount<out T> where T : Account
     {
-        T Account { get; }
+        //T Account { get; }
+
+        T TopUp(decimal sum);
         /// <summary>
         /// Пополнение (открытие нового) счета, начальный баланс должен быть положительным
         /// </summary>

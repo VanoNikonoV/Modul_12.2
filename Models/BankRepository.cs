@@ -1,18 +1,10 @@
-﻿using Modul_13.ViewModels.Base;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
 
 namespace Modul_13.Models
 {
-    public class BankRepository: ObservableCollection<BankClient<Account>> 
+    public class BankRepository: ObservableCollection<BankClient<Account>>
     {
-
         public BankRepository(string path = "")
         {
             //LoadData(path);
@@ -36,7 +28,6 @@ namespace Modul_13.Models
 
             this[i] = currentClient;
         }
-
         #region Автогенерация данных
         private void GetClientsRep(int count)
         {
@@ -61,7 +52,7 @@ namespace Modul_13.Models
             }
         }
 
-       
+        
 
         static readonly string[] firstNames;
 

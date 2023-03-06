@@ -3,9 +3,7 @@ using System.ComponentModel;
 
 namespace Modul_13.Models
 {
-    // List<T> Accounts; Сделать у клиента список с возмодными счетами
     public class BankClient<T> : INotifyPropertyChanged where T : Account
-        //BankClient<T> : INotifyPropertyChanged where T : BankAccount
     {
         /// <summary>
         /// Cведения о владельце счета
@@ -16,12 +14,6 @@ namespace Modul_13.Models
         /// Депозитный счет
         /// </summary>
         public T Deposit { get; set; }
-        //public T Deposit { get; set; }
-
-        /// <summary>
-        /// Недепозитный счет
-        /// </summary>
-        //public NoDepositAccount NoDeposit { get; set; }
 
         /// <summary>
         /// Конструктор клиента банка, с возможностью завести два счета
@@ -32,8 +24,7 @@ namespace Modul_13.Models
         public BankClient(Client owner, T deposit = null)
         {
             this.Owner = owner;
-            this.Deposit = deposit;
-            
+            this.Deposit = deposit; 
         }
 
         /// <summary>

@@ -1,16 +1,10 @@
 ﻿using Modul_13.Cmds;
-using Modul_13.Commands;
 using Modul_13.Models;
 using Modul_13.View;
 using Modul_13.ViewModels.Base;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 
 namespace Modul_13.ViewModels
 {
@@ -73,13 +67,18 @@ namespace Modul_13.ViewModels
 
         #region Команды
         private RelayCommand newClientAddCommand = null;
+        /// <summary>
+        /// Команда для добавления клиента
+        /// </summary>
         public RelayCommand NewClientAddCommand => 
             newClientAddCommand ?? (newClientAddCommand = new RelayCommand(AddNewClient, CanAddClient));
 
         private RelayCommand deleteClientCommand = null;
+        /// <summary>
+        /// Команда для удаления клиента
+        /// </summary>
         public RelayCommand DeleteClientCommand => 
             deleteClientCommand ?? (deleteClientCommand = new RelayCommand(DeleteClient, CanDeleteClient));
-
         #endregion
 
         private bool CanDeleteClient()

@@ -303,18 +303,21 @@ namespace Modul_13.ViewModels
         /// </summary>
         private void AddAccount(string selectedAccount) 
         {
-            switch (selectedAccount)
+            if (CurrentClient != null)
             {
-                case "Deposit":
+                switch (selectedAccount)
+                {
+                    case "Deposit":
 
-                    CurrentClient.AddAccount(AccountType.Deposit, 100, 1); break;
+                        CurrentClient.AddAccount(AccountType.Deposit, 100, 1); break;
 
-                case "NoDeposit":
+                    case "NoDeposit":
 
-                    CurrentClient.AddAccount(AccountType.NoDeposit, 100, 1); break;
+                        CurrentClient.AddAccount(AccountType.NoDeposit, 100, 1); break;
 
+                }
             }
-            //BankRepository.ReplaceDeposit(CurrentClient);
+            else MWindow.ViewModel.ShowStatusBarText("Выберите клиента");
         }
         #endregion
     }

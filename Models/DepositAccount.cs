@@ -10,9 +10,11 @@ namespace Modul_13.Models
     /// <summary>
     /// Счет для начисления процентов
     /// </summary>
-    public class DepositAccount : Account, IAccount<DepositAccount>
+    public class DepositAccount : Account, IAccount<Account>
     {
         public DepositAccount(decimal initialBalance, decimal minimumBalance) : base(initialBalance, minimumBalance) { }
+
+        public Account GetAccount => this;
 
         public override void PerformMonthEndTransactions()
         {
@@ -26,7 +28,8 @@ namespace Modul_13.Models
             }
         }
 
-        public DepositAccount TopUp(decimal sum)
+
+        public Account TopUpAccount(decimal sum)
         {
             this.MakeDeposit(sum, DateTime.Now, $"Пополенение: {sum}");
 

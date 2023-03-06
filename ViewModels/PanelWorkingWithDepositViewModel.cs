@@ -74,6 +74,10 @@ namespace Modul_13.ViewModels
 
         public TextBox SumTransfer { get; set; }
 
+        public TextBox SumAddDeposit_TextBox { get; set; }
+
+        public TextBox SumAddNoDeposit_TextBox { get; set; }
+
         #endregion
 
         public PanelWorkingWithDepositViewModel()
@@ -92,12 +96,6 @@ namespace Modul_13.ViewModels
         private RelayCommand<string> topUpAccountCommand = null;
         public RelayCommand<string> TopUpAccountCommand => topUpAccountCommand ?? (topUpAccountCommand = new RelayCommand<string>(TopUpAccountExecuted, CanTopUpAccount));
 
-        private bool CanTopUpAccount(string arg)
-        {
-            return true;
-        }
-
-
         #endregion
 
         #region Методы для работы со счетами
@@ -105,7 +103,7 @@ namespace Modul_13.ViewModels
         /// <summary>
         /// Корректность исходных данных для выполнения перевода
         /// </summary>
-        /// <param name="agrs"></param>
+        /// <param name="sum">Сумма перевода</param>
         /// <returns>false - если данные корректны
         ///          true - если нет данных</returns>
         private bool CanMakeTransfer(string sum)
@@ -113,15 +111,14 @@ namespace Modul_13.ViewModels
             if (sum.Length>0 && Recipient != null)
             {
                 return true;
-
             }
             return false;  
         }
 
-       /// <summary>
-       /// Перевод денежных средств между счетами
-       /// </summary>
-       /// <param name="sum"></param>
+        /// <summary>
+        /// Перевод денежных средств между счетами
+        /// </summary>
+        /// <param name="sum">Сумма перевода</param>
         private void TransferExecuted(string sum) // либо передать в метод сам TextBox, чтобы можно было скинуть в ноль свойство текст
         {
             decimal amount;
@@ -135,26 +132,57 @@ namespace Modul_13.ViewModels
             else { MessageBox.Show("Нужно ввсети число"); }
         }
 
-        //Используя ковариантный интерфейс, реализуйте методы пополнения счёта по соответствующему типу.
-        //https://metanit.com/sharp/tutorial/3.27.php
+        /// <summary>
+        /// Возможность выполнения операции пополнение счета
+        /// </summary>
+        /// <param name="selectedAccount">Тип счета</param>
+        /// <returns></returns>
+        private bool CanTopUpAccount(string selectedAccount)
+        {
+            return true;
+        }
 
-        private void TopUpAccountExecuted(string sum)
+        /// <summary>
+        /// Пополнение счета по по соответствующему типу
+        /// </summary>
+        /// <param name="selectedAccount">Тип счета</param>
+        private void TopUpAccountExecuted(string selectedAccount)
         {
             decimal amount;
 
-            if (Decimal.TryParse(sum, out amount))
+            switch (selectedAccount)
             {
-               // IAccount<Account> account = this.Sender.Accounts[0];
-                
-                var temp = this.Sender.Accounts[0] as IAccount<NoDepositAccount>;
+                case "Deposit":
 
-                temp.TopUp(amount);
+                    if (Decimal.TryParse(SumAddDeposit_TextBox.Text, out amount))
+                    {
+                        IAccount<Account> account = (IAccount<Account>)this.Sender.Accounts[0];
 
-                //this.Sender.Accounts[0].MakeDeposit(amount, DateTime.Now, $"Пополенение: {sum}");
+                        account.TopUpAccount(amount);
 
-                SumTransfer.Text = "";
+                        SumAddDeposit_TextBox.Text = string.Empty;
+                    }
+                    else { MWindow.ViewModel.ShowStatusBarText("Нужно ввсети число"); }
+
+                    break;
+
+                case "NoDeposit":
+
+                    if (Decimal.TryParse(SumAddNoDeposit_TextBox.Text, out amount))
+                    {
+                        IAccount<Account> account = (IAccount<Account>)this.Sender.Accounts[1];
+
+                        account.TopUpAccount(amount);
+
+                        SumAddNoDeposit_TextBox.Text = string.Empty;
+                    }
+                    else { MWindow.ViewModel.ShowStatusBarText("Нужно ввсети число"); }
+
+                    break;
+
+                default:
+                    break;
             }
-            else { MessageBox.Show("Нужно ввсети число"); }
         }
         #endregion
     }

@@ -96,7 +96,7 @@
                       IsReadOnly="True"/>
         </Grid>
 
-        <Grid>
+        <Grid x:Name ="DepositInfo" Uid="Deposit">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="60"/>
@@ -123,13 +123,21 @@
                     FallbackValue=счет не открыт,
                     RelativeSource={RelativeSource AncestorType={x:Type Page}, 
                     Mode=FindAncestor}, 
-                    UpdateSourceTrigger=PropertyChanged}"/>
+                    UpdateSourceTrigger=PropertyChanged}" FlowDirection="RightToLeft"/>
             
-            <TextBox Grid.Row="2" Grid.Column="0" 
-                     FontSize="16" Width="120"/>
+            <TextBox x:Name="SumAddDeposit_TextBox" 
+                     Grid.Row="2" Grid.Column="0" 
+                     FontSize="16" Width="120" 
+                     HorizontalAlignment="Center" 
+                     VerticalAlignment="Center" FlowDirection="RightToLeft"/>
 
             <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
-                    Command="" Cursor="Hand"
+                    Command="{Binding PanelWorkingWithDepositViewModel.TopUpAccountCommand, 
+                    Mode=OneWay, 
+                    RelativeSource={RelativeSource FindAncestor, 
+                    AncestorType={x:Type local:PanelWorkingWithDeposit}}}" 
+                    CommandParameter="{Binding Uid, ElementName=DepositInfo}"
+                    Cursor="Hand"
                     Background="Black"
                     ToolTip="Пополнить счет"
                     BorderBrush="{x:Null}">
@@ -140,7 +148,7 @@
             </Button>
         </Grid>
 
-        <Grid>
+        <Grid x:Name ="NoDepositInfo" Uid="NoDeposit">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="60"/>
@@ -166,15 +174,20 @@
                     FallbackValue=счет не открыт,
                     RelativeSource={RelativeSource AncestorType={x:Type Page}, 
                     Mode=FindAncestor}, 
-                    UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Name ="AddSumNoDeposit"  Grid.Row="2" Grid.Column="0" 
-                     FontSize="16" Width="120"/>
+                    UpdateSourceTrigger=PropertyChanged}" FlowDirection="RightToLeft"/>
+            
+            <TextBox x:Name="SumAddNoDeposit_TextBox"  
+                     Grid.Row="2" Grid.Column="0" 
+                     FontSize="16" Width="120"
+                     HorizontalAlignment="Center" 
+                     VerticalAlignment="Center" FlowDirection="RightToLeft"/>
+            
             <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
                     Command="{Binding PanelWorkingWithDepositViewModel.TopUpAccountCommand, 
                     Mode=OneWay, 
                     RelativeSource={RelativeSource FindAncestor, 
                     AncestorType={x:Type local:PanelWorkingWithDeposit}}}" 
-                    CommandParameter="{Binding Text, ElementName=AddSumNoDeposit}"
+                    CommandParameter="{Binding Uid, ElementName=NoDepositInfo}"
                     Cursor="Hand"
                     Background="Black"
                     ToolTip="Пополнить счет"

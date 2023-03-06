@@ -76,6 +76,8 @@ namespace Modul_13.Models
             var deposit = new Transaction(amount, date, note);
 
             _allTransactions.Add(deposit);
+
+            OnPropertyChanged("Balance");
         }
        
         /// <summary>
@@ -96,6 +98,7 @@ namespace Modul_13.Models
             _allTransactions.Add(withdrawal);
             if (overdraftTransaction != null)
                 _allTransactions.Add(overdraftTransaction);
+            OnPropertyChanged("Balance");
         }
 
         protected virtual Transaction CheckWithdrawalLimit(bool isOverdrawn)

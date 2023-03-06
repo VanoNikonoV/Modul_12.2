@@ -22,6 +22,10 @@ namespace Modul_13.View
             PanelWorkingWithDepositViewModel = new PanelWorkingWithDepositViewModel();
 
             PanelWorkingWithDepositViewModel.SumTransfer = this.SumTransfer_TextBox;
+
+            PanelWorkingWithDepositViewModel.SumAddDeposit_TextBox = this.SumAddDeposit_TextBox;
+
+            PanelWorkingWithDepositViewModel.SumAddNoDeposit_TextBox = this.SumAddNoDeposit_TextBox;
         }
 
         /// <summary>

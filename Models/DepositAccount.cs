@@ -14,8 +14,6 @@ namespace Modul_13.Models
     {
         public DepositAccount(decimal initialBalance, decimal minimumBalance) : base(initialBalance, minimumBalance) { }
 
-        public Account GetAccount => this;
-
         public override void PerformMonthEndTransactions()
         {
             if (Balance > 500m)

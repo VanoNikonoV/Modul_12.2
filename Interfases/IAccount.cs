@@ -7,7 +7,5 @@ namespace Modul_13.Interfases
     public interface IAccount<out T> where T : Account
     {
         T TopUpAccount(decimal sum);
-
-        T GetAccount { get; }
     }
 }

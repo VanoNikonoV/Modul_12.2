@@ -14,8 +14,6 @@ namespace Modul_13.Models
     {
         public NoDepositAccount( decimal initialBalance, decimal minimumBalance) : base(initialBalance, minimumBalance) { }
 
-        public Account GetAccount => this;
-
         public Account TopUpAccount(decimal sum)
         {
             this.MakeDeposit(sum, DateTime.Now, $"Пополенение: {sum}");

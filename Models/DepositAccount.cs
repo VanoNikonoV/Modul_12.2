@@ -10,28 +10,32 @@ namespace Modul_13.Models
     /// <summary>
     /// Счет для начисления процентов
     /// </summary>
-    public class DepositAccount : Account, IAccount<Account>
+    public class DepositAccount : Account, ICovAccount<DepositAccount>, IContrAccount<Account>
     {
-        public DepositAccount(decimal initialBalance, decimal minimumBalance) : base(initialBalance, minimumBalance) { }
+        public DepositAccount()
+        {
+            
+        }
+        public DepositAccount(decimal initialBalance) : base(initialBalance) { }
+
+        public DepositAccount MakeDeposit(decimal amount)
+        {
+            this.Balance += amount;
+
+            return this;
+        }
+
+        public void MakeWithdrawal(Account client, decimal amount)
+        {
+            client.Balance -= amount;         
+        }
 
         public override void PerformMonthEndTransactions()
         {
             if (Balance > 500m)
             {
-                decimal interest = Balance * 0.05m;
-
-                MakeDeposit(interest,
-                DateTime.Now,
-                "Начислены ежемесячные проценты");
+                this.Balance *= 0.05m;
             }
-        }
-
-
-        public Account TopUpAccount(decimal sum)
-        {
-            this.MakeDeposit(sum, DateTime.Now, $"Пополенение: {sum}");
-
-            return this;
-        }
+        } 
     }
 }

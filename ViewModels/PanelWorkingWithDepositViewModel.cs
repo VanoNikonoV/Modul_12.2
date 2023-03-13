@@ -93,8 +93,8 @@ namespace Modul_13.ViewModels
 
         public RelayCommand<string> MakeTransfer => makeTransfer ?? (makeTransfer = new RelayCommand<string>(TransferExecuted, CanMakeTransfer));
 
-        private RelayCommand<string> topUpAccountCommand = null;
-        public RelayCommand<string> TopUpAccountCommand => topUpAccountCommand ?? (topUpAccountCommand = new RelayCommand<string>(TopUpAccountExecuted, CanTopUpAccount));
+        private RelayCommand<string> makeDepositCommand = null;
+        public RelayCommand<string> MakeDepositCommand => makeDepositCommand ?? (makeDepositCommand = new RelayCommand<string>(MakeDepositExecuted, CanMakeDeposit));
 
         #endregion
 
@@ -125,7 +125,15 @@ namespace Modul_13.ViewModels
 
             if (Decimal.TryParse(sum, out amount))
             {
-                this.Sender.Transfer(this.Recipient, amount);
+                IContrAccount<DepositAccount> r = new DepositAccount();
+
+                //IContrAccount<Account> a = new DepositAccount();
+
+                //r = a;
+
+                r.MakeWithdrawal(Sender.Deposit, amount);
+                
+                //this.Sender.Transfer(this.Recipient, amount);
 
                 SumTransfer.Text = "";
             }
@@ -137,7 +145,7 @@ namespace Modul_13.ViewModels
         /// </summary>
         /// <param name="selectedAccount">Тип счета</param>
         /// <returns></returns>
-        private bool CanTopUpAccount(string selectedAccount)
+        private bool CanMakeDeposit(string selectedAccount)
         {
             return true;
         }
@@ -146,7 +154,7 @@ namespace Modul_13.ViewModels
         /// Пополнение счета по по соответствующему типу
         /// </summary>
         /// <param name="selectedAccount">Тип счета</param>
-        private void TopUpAccountExecuted(string selectedAccount)
+        private void MakeDepositExecuted(string selectedAccount)
         {
             decimal amount;
 
@@ -156,9 +164,9 @@ namespace Modul_13.ViewModels
 
                     if (Decimal.TryParse(SumAddDeposit_TextBox.Text, out amount))
                     {
-                        IAccount<Account> account = (IAccount<Account>)this.Sender.Accounts[0];
+                        ICovAccount<Account> accountForWork = new DepositAccount(this.Sender.Deposit.Balance);
 
-                        account.TopUpAccount(amount);
+                        Sender.Deposit = accountForWork.MakeDeposit(amount);
 
                         SumAddDeposit_TextBox.Text = string.Empty;
                     }
@@ -170,9 +178,9 @@ namespace Modul_13.ViewModels
 
                     if (Decimal.TryParse(SumAddNoDeposit_TextBox.Text, out amount))
                     {
-                        IAccount<Account> account = (IAccount<Account>)this.Sender.Accounts[1];
+                        ICovAccount<Account> accountForWork = new NoDepositAccount(this.Sender.NoDeposit.Balance);
 
-                        account.TopUpAccount(amount);
+                        Sender.NoDeposit = accountForWork.MakeDeposit(amount); 
 
                         SumAddNoDeposit_TextBox.Text = string.Empty;
                     }

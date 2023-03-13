@@ -259,9 +259,9 @@ namespace Modul_13.ViewModels
             switch (selectedAccount)
             {
                 case "Deposit":
-                   return CurrentClient?.Accounts[0] != null ? true : false;
+                   return CurrentClient?.Deposit != null ? true : false;
                 case "NoDeposit":
-                   return CurrentClient?.Accounts[1] != null ? true : false;
+                   return CurrentClient?.NoDeposit != null ? true : false;
 
                     default: return false;
             }   
@@ -290,9 +290,9 @@ namespace Modul_13.ViewModels
             switch (selectedAccount)
             {
                 case "Deposit":
-                    return CurrentClient?.Accounts[0] != null ? false : true;
+                    return CurrentClient?.Deposit != null ? false : true;
                 case "NoDeposit":
-                    return CurrentClient?.Accounts[1] != null ? false :true ;
+                    return CurrentClient?.NoDeposit != null ? false :true ;
 
                 default: return false;
             }
@@ -309,11 +309,11 @@ namespace Modul_13.ViewModels
                 {
                     case "Deposit":
 
-                        CurrentClient.AddAccount(AccountType.Deposit, 100, 1); break;
+                        CurrentClient.AddAccount(AccountType.Deposit, 100); break;
 
                     case "NoDeposit":
 
-                        CurrentClient.AddAccount(AccountType.NoDeposit, 100, 1); break;
+                        CurrentClient.AddAccount(AccountType.NoDeposit, 100); break;
 
                 }
             }

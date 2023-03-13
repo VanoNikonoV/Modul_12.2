@@ -10,13 +10,13 @@ namespace Modul_13.Models
     /// <summary>
     /// Счет для начисления процентов
     /// </summary>
-    public class NoDepositAccount:Account, IAccount<Account>
+    public class NoDepositAccount:Account, ICovAccount<NoDepositAccount>
     {
-        public NoDepositAccount( decimal initialBalance, decimal minimumBalance) : base(initialBalance, minimumBalance) { }
+        public NoDepositAccount( decimal initialBalance) : base(initialBalance) { }
 
-        public Account TopUpAccount(decimal sum)
+        public NoDepositAccount MakeDeposit(decimal amount)
         {
-            this.MakeDeposit(sum, DateTime.Now, $"Пополенение: {sum}");
+            this.Balance += amount;
 
             return this;
         }

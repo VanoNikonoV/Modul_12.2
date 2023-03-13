@@ -118,7 +118,7 @@
                     VerticalAlignment="Center" 
                     
                     IsReadOnly="True"
-                    Text="{Binding Path=DataContext.Accounts[0].Balance, 
+                    Text="{Binding Path=DataContext.Deposit.Balance, 
                     StringFormat=C,ConverterCulture=ru-RU,Mode=OneWay,
                     FallbackValue=счет не открыт,
                     RelativeSource={RelativeSource AncestorType={x:Type Page}, 
@@ -132,7 +132,7 @@
                      VerticalAlignment="Center" FlowDirection="RightToLeft"/>
 
             <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
-                    Command="{Binding PanelWorkingWithDepositViewModel.TopUpAccountCommand, 
+                    Command="{Binding PanelWorkingWithDepositViewModel.MakeDepositCommand, 
                     Mode=OneWay, 
                     RelativeSource={RelativeSource FindAncestor, 
                     AncestorType={x:Type local:PanelWorkingWithDeposit}}}" 
@@ -169,7 +169,7 @@
                     HorizontalAlignment="Center" 
                     VerticalAlignment="Center" 
                     IsReadOnly="True"
-                    Text="{Binding Path=DataContext.Accounts[1].Balance, 
+                    Text="{Binding Path=DataContext.NoDeposit.Balance, 
                     StringFormat=C,ConverterCulture=ru-RU,Mode=OneWay,
                     FallbackValue=счет не открыт,
                     RelativeSource={RelativeSource AncestorType={x:Type Page}, 
@@ -183,7 +183,7 @@
                      VerticalAlignment="Center" FlowDirection="RightToLeft"/>
             
             <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
-                    Command="{Binding PanelWorkingWithDepositViewModel.TopUpAccountCommand, 
+                    Command="{Binding PanelWorkingWithDepositViewModel.MakeDepositCommand, 
                     Mode=OneWay, 
                     RelativeSource={RelativeSource FindAncestor, 
                     AncestorType={x:Type local:PanelWorkingWithDeposit}}}" 

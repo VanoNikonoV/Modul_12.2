@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Modul_13.Interfases;
+using System;
 using System.ComponentModel;
 using System.Windows;
 
@@ -12,10 +13,15 @@ namespace Modul_13.Models
         public Client Owner { get; set; }
 
         /// <summary>
-        /// Коллекция счетов
+        /// Депозитный счет
         /// </summary>
-        public T[] Accounts { get; private set; } 
-   
+        public T Deposit { get; set; }
+
+        /// <summary>
+        /// Депозитный счет
+        /// </summary>
+        public T NoDeposit { get; set; }
+
         /// <summary>
         /// Конструктор клиента банка, с возможностью завести два счета
         /// </summary>
@@ -26,7 +32,9 @@ namespace Modul_13.Models
         {
             this.Owner = owner;
 
-            this.Accounts = new T[2];
+            Deposit = null;
+            NoDeposit = null;
+  
         }
 
         /// <summary>
@@ -34,23 +42,22 @@ namespace Modul_13.Models
         /// </summary>
         /// <param name="selectedAccount">Выбранный тип счета</param>
         /// <param name="initialBalance">Начальный баланс при открытии счета</param>
-        /// <param name="minimumBalance">Минимальный баланс при открытии счета</param>
-        public void AddAccount(AccountType selectedAccount, decimal initialBalance, decimal minimumBalance)
+        public void AddAccount(AccountType selectedAccount, decimal initialBalance)
         {
             switch (selectedAccount)
             {
                 case AccountType.Deposit:
 
-                    this.Accounts[0] = new DepositAccount(initialBalance, minimumBalance) as T;
+                    this.Deposit = new DepositAccount(initialBalance) as T;
 
-                    OnPropertyChanged(nameof(Accounts));
+                    OnPropertyChanged(nameof(Deposit));
 
                     break;
                 case AccountType.NoDeposit:
 
-                    this.Accounts[1] = new NoDepositAccount(initialBalance, minimumBalance) as T;
+                    this.NoDeposit = new NoDepositAccount(initialBalance) as T;
 
-                    OnPropertyChanged(nameof(Accounts));
+                    OnPropertyChanged(nameof(NoDeposit));
 
                     break;
                 default:
@@ -67,16 +74,16 @@ namespace Modul_13.Models
             {
                 case AccountType.Deposit:
 
-                    this.Accounts[0] = null;
+                    this.Deposit = null;
 
-                    OnPropertyChanged(nameof(Accounts));
+                    OnPropertyChanged(nameof(Deposit));
 
                     break;
                 case AccountType.NoDeposit:
 
-                    this.Accounts[1] = null;
+                    this.NoDeposit = null;
 
-                    OnPropertyChanged(nameof(Accounts));
+                    OnPropertyChanged(nameof(NoDeposit));
 
                     break;
                 default:
@@ -85,20 +92,22 @@ namespace Modul_13.Models
             }
         }
 
-        /// <summary>
-        /// Перевод денежных средств на счет получателя
-        /// </summary>
-        /// <param name="recipient">Получатель платежа</param>
-        /// <param name="amount">Сумма перевода</param>
-        public void Transfer(BankClient<T> recipient, decimal amount)
-        {
-            if(recipient != this)
-            {
-                this.Accounts[0].MakeWithdrawal(amount, DateTime.Now, $"Списание {amount} в пользу клиента с:{recipient.Owner.FirstName}");
+        ///// <summary>
+        ///// Перевод денежных средств на счет получателя
+        ///// </summary>
+        ///// <param name="recipient">Получатель платежа</param>
+        ///// <param name="amount">Сумма перевода</param>
+        //public void Transfer(BankClient<T> recipient, decimal amount)
+        //{
+        //    if(recipient != this)
+        //    {
+        //        ICovAccount<Account> account = recipient.Deposit;
+                
+        //        this.Accounts[0].MakeWithdrawal(amount, DateTime.Now, $"Списание {amount} в пользу клиента с:{recipient.Owner.FirstName}");
 
-                recipient.Accounts[0].MakeDeposit(amount, DateTime.Now, $"Перевод {amount} от клиента с : {this.Owner.FirstName}");
-            }
-        }
+        //        recipient.Accounts[0].MakeDeposit(amount, DateTime.Now, $"Перевод {amount} от клиента с : {this.Owner.FirstName}");
+        //    }
+        //}
 
         #region PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

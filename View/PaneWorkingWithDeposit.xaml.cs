@@ -36,7 +36,7 @@ namespace Modul_13.View
         private void FixingSender_TextBox(object sender, RoutedEventArgs e)
         {
            IEnumerable<BankClient<Account>> banks= from client in PanelWorkingWithDepositViewModel.BankRepository
-                                          where client.Accounts[0] != null 
+                                          where client.Deposit != null 
                                           where client != DataContext as BankClient<Account>
                                           select client;
 

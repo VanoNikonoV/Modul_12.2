@@ -292,9 +292,14 @@ namespace Modul_13.ViewModels
         {
             int index = bankRepository.IndexOf(CurrentClient);
 
-            CurrentClient.AddDeposit(100, 1);
+            if (CurrentClient != null)
+            {
+                CurrentClient.AddDeposit(100, 1);
 
-            BankRepository.ReplaceDeposit(CurrentClient);
+                BankRepository.ReplaceDeposit(CurrentClient);
+            }
+
+            else MWindow.ViewModel.ShowStatusBarText("Выберите клиента");
         }
 
         #endregion

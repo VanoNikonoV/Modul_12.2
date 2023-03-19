@@ -126,7 +126,7 @@ namespace Modul_13.ViewModels
             }
         }
 
-        private void ShowStatusBarText(string message)
+        public void ShowStatusBarText(string message)
         {
             TextBlock statusBar = Application.Current.MainWindow.FindName("StatusBarText") as TextBlock;
             

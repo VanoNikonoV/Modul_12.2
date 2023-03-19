@@ -11,7 +11,7 @@ namespace Modul_13.Models
     /// <summary>
     /// Счет для начисления процентов
     /// </summary>
-    public class DepositAccount : Account, ICovAccount<Account>, IContrAccount<DepositAccount>
+    public class DepositAccount : Account, ICovAccount<Account>, IContrAccount<Account>
     {
         
         public DepositAccount(decimal initialBalance) : base(initialBalance) { }
@@ -23,7 +23,7 @@ namespace Modul_13.Models
             return this;
         }
 
-        public void MakeWithdrawal(DepositAccount client, decimal amount)
+        public void MakeWithdrawal(Account client, decimal amount)
         {
             if (client.Balance >= amount)
             {

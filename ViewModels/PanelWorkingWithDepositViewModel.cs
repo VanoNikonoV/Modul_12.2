@@ -30,11 +30,11 @@ namespace Modul_13.ViewModels
         /// <summary>
         /// Получатель платежа
         /// </summary>
-        private BankClient<Account> recipient;
+        private Account recipient;
         /// <summary>
         /// Получатель платежа
         /// </summary>
-        public BankClient<Account> Recipient 
+        public Account Recipient 
         { 
             get => recipient;
             set { Set(ref recipient, value); }  
@@ -54,21 +54,7 @@ namespace Modul_13.ViewModels
                 Set(ref bankRepository, value, "BankRepository");
             }
         }
-        /// <summary>
-        /// Список клиентов с открытым депозитным счетом счетом
-        /// </summary>
-        private IEnumerable<BankClient<Account>> onlyDepositRepository;
-        /// <summary>
-        /// Список клиентов с открытым депозитным счетом счетом
-        /// </summary>
-        public IEnumerable<BankClient<Account>> OnlyDepositRepository 
-        { 
-            get => onlyDepositRepository;
-            set
-            {
-                Set(ref onlyDepositRepository, value, "OnlyDepositRepository");
-            }
-        }
+        
 
         #region UI
 
@@ -91,10 +77,18 @@ namespace Modul_13.ViewModels
 
         private RelayCommand<string> makeTransfer = null;
 
-        public RelayCommand<string> MakeTransfer => makeTransfer ?? (makeTransfer = new RelayCommand<string>(TransferExecuted, CanMakeTransfer));
+        /// <summary>
+        /// Команда для перевод между счетами
+        /// </summary>
+        public RelayCommand<string> MakeTransfer => makeTransfer ?? (makeTransfer = 
+            new RelayCommand<string>(TransferExecuted, CanMakeTransfer));
 
         private RelayCommand<string> makeDepositCommand = null;
-        public RelayCommand<string> MakeDepositCommand => makeDepositCommand ?? (makeDepositCommand = new RelayCommand<string>(MakeDepositExecuted, CanMakeDeposit));
+        /// <summary>
+        /// Команда для пополнения счета
+        /// </summary>
+        public RelayCommand<string> MakeDepositCommand => makeDepositCommand ?? (makeDepositCommand = 
+            new RelayCommand<string>(MakeDepositExecuted, CanMakeDeposit));
 
         #endregion
 
@@ -104,40 +98,76 @@ namespace Modul_13.ViewModels
         /// Корректность исходных данных для выполнения перевода
         /// </summary>
         /// <param name="sum">Сумма перевода</param>
-        /// <returns>false - если данные корректны
-        ///          true - если нет данных</returns>
-        private bool CanMakeTransfer(string sum)
+        /// <returns>false - если получать выбран
+        ///          true - если получать не выбран</returns>
+        private bool CanMakeTransfer(string selectedAccount)
         {
-            if (sum.Length>0 && Recipient != null)
+            if (Recipient != null)
             {
                 return true;
             }
-            return false;  
+            return false;
         }
 
         /// <summary>
         /// Перевод денежных средств между счетами
         /// </summary>
-        /// <param name="sum">Сумма перевода</param>
-        private void TransferExecuted(string sum) // либо передать в метод сам TextBox, чтобы можно было скинуть в ноль свойство текст
+        /// <<param name="selectedAccount">Тип счета</param>
+        private void TransferExecuted(string selectedAccount) 
         {
             decimal amount;
 
-            if (Decimal.TryParse(sum, out amount))
+            switch (selectedAccount)
             {
-                IContrAccount<DepositAccount> r = new DepositAccount();
+                case "Deposit":
 
-                //IContrAccount<Account> a = new DepositAccount();
+                    if (Recipient == null) 
+                    { 
+                        MWindow.ViewModel.ShowStatusBarText("У вас один счет");
 
-                //r = a;
+                        SumAddDeposit_TextBox.Text = string.Empty;
 
-                r.MakeWithdrawal(Sender.Deposit, amount);
-                
-                //this.Sender.Transfer(this.Recipient, amount);
+                        break; 
+                    }
 
-                SumTransfer.Text = "";
+                    if (Decimal.TryParse(SumAddDeposit_TextBox.Text, out amount))
+                    {
+                        Recipient = (Recipient as ICovAccount<Account>).MakeDeposit(amount);
+
+                        (Recipient as IContrAccount<Account>).MakeWithdrawal(Sender.Deposit, amount);
+
+                        SumAddDeposit_TextBox.Text = string.Empty;
+                    }
+                    else { MWindow.ViewModel.ShowStatusBarText("Нужно ввсети число"); }
+
+                    break;
+
+                case "NoDeposit":
+
+                    if (Recipient == null) 
+                    { 
+                        MWindow.ViewModel.ShowStatusBarText("У вас один счет");
+
+                        SumAddNoDeposit_TextBox.Text = string.Empty;
+
+                        break; 
+                    }
+
+                    if (Decimal.TryParse(SumAddNoDeposit_TextBox.Text, out amount))
+                    {
+                        Recipient = (Recipient as ICovAccount<Account>).MakeDeposit(amount);
+
+                        (Recipient as IContrAccount<Account>).MakeWithdrawal(Sender.NoDeposit, amount);
+
+                        SumAddNoDeposit_TextBox.Text = string.Empty;
+
+                    }
+                    else { MWindow.ViewModel.ShowStatusBarText("Нужно ввсети число"); }
+
+                    break;
             }
-            else { MessageBox.Show("Нужно ввсети число"); }
+
+           
         }
 
         /// <summary>
@@ -151,7 +181,7 @@ namespace Modul_13.ViewModels
         }
 
         /// <summary>
-        /// Пополнение счета по по соответствующему типу
+        /// Пополнение счета по соответствующему типу
         /// </summary>
         /// <param name="selectedAccount">Тип счета</param>
         private void MakeDepositExecuted(string selectedAccount)
@@ -164,9 +194,7 @@ namespace Modul_13.ViewModels
 
                     if (Decimal.TryParse(SumAddDeposit_TextBox.Text, out amount))
                     {
-                        ICovAccount<Account> accountForWork = new DepositAccount(this.Sender.Deposit.Balance);
-
-                        Sender.Deposit = accountForWork.MakeDeposit(amount);
+                        Sender.Deposit = (Sender.Deposit as ICovAccount<Account>).MakeDeposit(amount);
 
                         SumAddDeposit_TextBox.Text = string.Empty;
                     }
@@ -178,9 +206,7 @@ namespace Modul_13.ViewModels
 
                     if (Decimal.TryParse(SumAddNoDeposit_TextBox.Text, out amount))
                     {
-                        ICovAccount<Account> accountForWork = new NoDepositAccount(this.Sender.NoDeposit.Balance);
-
-                        Sender.NoDeposit = accountForWork.MakeDeposit(amount); 
+                        Sender.NoDeposit = (Sender.NoDeposit as ICovAccount<Account>).MakeDeposit(amount);
 
                         SumAddNoDeposit_TextBox.Text = string.Empty;
                     }

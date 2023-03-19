@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,6 +14,7 @@ namespace Modul_13.Models
     public partial class Client : INotifyPropertyChanged, IDataErrorInfo, IEquatable<Client>
     {
         private string error;
+        [JsonIgnore]
         public string Error 
         { 
             get { return error; }
@@ -27,6 +29,7 @@ namespace Modul_13.Models
         /// <summary>
         /// Метод информиует о наличии/отсутствии ощибок в данных 
         /// </summary>
+        [JsonIgnore]
         public bool IsValid
         {
             get

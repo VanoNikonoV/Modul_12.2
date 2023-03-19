@@ -1,5 +1,4 @@
-﻿using Modul_13.Cmds;
-using Modul_13.Commands;
+﻿using Modul_13.Commands;
 using Modul_13.Models;
 using Modul_13.ViewModels.Base;
 using System;
@@ -67,26 +66,41 @@ namespace Modul_13.ViewModels
         #region Команды
 
         private RelayCommand<string> _editTelefonCommand = null;
+        /// <summary>
+        /// Команда для редактирования телефона клиента
+        /// </summary>
         public RelayCommand<string> EditTelefonCommand
             => _editTelefonCommand ?? (_editTelefonCommand = new RelayCommand<string>(EditTelefon, CanEditTelefon));
 
 
         private RelayCommand<string> editNameCommand = null;
+        /// <summary>
+        /// Команда для редактирования имени клиента
+        /// </summary>
         public RelayCommand<string> EditNameCommand =>
             editNameCommand ?? (editNameCommand = new RelayCommand<string>(EditName, CanEdit));
 
 
         private RelayCommand<string> editMiddleNameCommand = null;
+        /// <summary>
+        /// Команда для редактирования отчества клиента
+        /// </summary>
         public RelayCommand<string> EditMiddleNameCommand =>
             editMiddleNameCommand ?? (editMiddleNameCommand = new RelayCommand<string>(EditMiddleName, CanEdit));
 
 
         private RelayCommand<string> editSecondNameCommand = null;
+        /// <summary>
+        /// Команда для редактирования фамилии клиента
+        /// </summary>
         public RelayCommand<string> EditSecondNameCommand =>
             editSecondNameCommand ?? (editSecondNameCommand = new RelayCommand<string>(EditSecondName, CanEdit));
 
 
         private RelayCommand<string> editSeriesAndPassportNumberCommand = null;
+        /// <summary>
+        /// Команда для редактирования паспортных данных клиента
+        /// </summary>
         public RelayCommand<string> EditSeriesAndPassportNumberCommand =>
             editSeriesAndPassportNumberCommand ?? (editSeriesAndPassportNumberCommand
             = new RelayCommand<string>(EditSeriesAndPassportNumber, CanEdit));

@@ -14,10 +14,7 @@ namespace Modul_13.Interfases
     public interface IContrAccount<in K>
     {
         void MakeWithdrawal(K client, decimal amount);
+       
     }
-    // Используя ковариантный интерфейс, реализуйте методы пополнения счёта по соответствующему типу.
-    //public interface IAccount<out T> where T : Account
-    //{
-    //    T TopUpAccount(decimal sum);
-    //}
+   
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -24,7 +25,7 @@ namespace Modul_13.Models
             id = 0;
         }
         #endregion
-
+        
         public Client() : this("Имя", "Отчество", "Фамилия", "79000000000", "66 00 000000") { --id; } //для нового клиента
 
         /// <summary>
@@ -58,6 +59,7 @@ namespace Modul_13.Models
         /// <param name="telefon"></param>
         /// <param name="seriesAndPassportNumber"></param>
         /// <param name="currentId"></param>
+        [JsonConstructor]
         public Client(string firstName, string middleName,
                           string secondName, string telefon,
                           string seriesAndPassportNumber, 
@@ -166,6 +168,7 @@ namespace Modul_13.Models
         /// <summary>
         /// Информация об изменениях записях о клиентах
         /// </summary>
+        [JsonIgnore]
         public ObservableCollection<InformationAboutChanges> InfoChanges 
         { 
             get { return this.infoChanges; }
@@ -178,10 +181,11 @@ namespace Modul_13.Models
                 OnPropertyChanged(nameof(InfoChanges));
             }
         }
-       
+
         /// <summary>
         /// Индикатор наличия измнений
         /// </summary>
+        [JsonIgnore]
         public bool IsChanged 
         { 
             get { return this.isChanged; }

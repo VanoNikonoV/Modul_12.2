@@ -1,6 +1,4 @@
-﻿using Modul_13.Interfases;
-using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 
 namespace Modul_13.Models
@@ -92,23 +90,6 @@ namespace Modul_13.Models
             }
         }
 
-        ///// <summary>
-        ///// Перевод денежных средств на счет получателя
-        ///// </summary>
-        ///// <param name="recipient">Получатель платежа</param>
-        ///// <param name="amount">Сумма перевода</param>
-        //public void Transfer(BankClient<T> recipient, decimal amount)
-        //{
-        //    if(recipient != this)
-        //    {
-        //        ICovAccount<Account> account = recipient.Deposit;
-                
-        //        this.Accounts[0].MakeWithdrawal(amount, DateTime.Now, $"Списание {amount} в пользу клиента с:{recipient.Owner.FirstName}");
-
-        //        recipient.Accounts[0].MakeDeposit(amount, DateTime.Now, $"Перевод {amount} от клиента с : {this.Owner.FirstName}");
-        //    }
-        //}
-
         #region PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -116,6 +97,8 @@ namespace Modul_13.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+
+        
         #endregion
     }
 }

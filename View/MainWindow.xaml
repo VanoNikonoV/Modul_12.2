@@ -10,7 +10,7 @@
         xmlns:cmds="clr-namespace:Modul_13.Commands" 
         xmlns:view="clr-namespace:Modul_13.View"
         mc:Ignorable="d"
-        Height="900" Width="1250" WindowStyle="None" 
+        Height="850" Width="1250" WindowStyle="None" 
         AllowsTransparency="True" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
@@ -269,15 +269,6 @@
                         RelativeSource={RelativeSource FindAncestor, 
                         AncestorType={x:Type Window}}}">
                     <materialDesign:PackIcon Kind="PlusBox" 
-                                     Width="25" Height="25" HorizontalAlignment="Center" 
-                                     Cursor="Hand" Foreground="#DD080808"/>
-                </Button>
-
-                <Button x:Name="Sort_Button" ToolTip="Coртировать по алфавиту"
-                Background="{x:Null}" BorderBrush="{x:Null}"
-                Cursor="Hand" HorizontalAlignment="Left" 
-                    Click="Sort_Button_Click">
-                    <materialDesign:PackIcon Kind="SortAlphabeticalDescending" 
                                      Width="25" Height="25" HorizontalAlignment="Center" 
                                      Cursor="Hand" Foreground="#DD080808"/>
                 </Button>

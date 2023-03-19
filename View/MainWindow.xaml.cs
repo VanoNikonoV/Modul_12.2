@@ -1,17 +1,11 @@
 ﻿using Microsoft.Win32;
-using Modul_13.Models;
-using Modul_13.View;
 using Modul_13.ViewModels;
-using Modul_13.ViewModels.Base;
-using System.Collections.Generic;
+using Newtonsoft.Json;
 using System.ComponentModel;
 using System.IO;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace Modul_13
 {
@@ -52,10 +46,7 @@ namespace Modul_13
                 case 0: //консультант
 
                     DataClients.ItemsSource = CollectionView;
-                    //DataClients.ItemsSource = CollectionViewSource.GetDefaultView(ViewModel.Consultant.ViewClientsData(ViewModel.BankRepository));
-                    // Для консультанта нужно реализовать поиск в базе менаджера
-                    // По ID?
-
+                   
                     break;
 
                 case 1: //менждер
@@ -96,59 +87,27 @@ namespace Modul_13
             ListChanges_Label.Visibility = Visibility.Collapsed;
         }
 
-        /// <summary>
-        /// Для корректной работы метода Sort_Button_Click
-        /// </summary>
-        private bool isSort = false;
-
-        /// <summary>
-        /// Производит сортировку по алфавиту по имени клиента
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Sort_Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (!isSort)
-            {
-                CollectionView.SortDescriptions.Add(new SortDescription("FirstName", ListSortDirection.Ascending));
-
-                DataClients.ItemsSource = CollectionView;
-
-                isSort = true;
-            }
-            else 
-            {
-                CollectionView.SortDescriptions.Clear();
-
-                isSort = false;
-            }
-        }
-
         private void SaveCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            //foreach (var client in ViewModel.ClientsRepository)
-            //{
-            //    if (client.IsChanged == true) { e.CanExecute = true; break; }
+            foreach (var client in ViewModel.BankRepository)
+            {
+                if (client.Owner.IsChanged == true) { e.CanExecute = true; break; }
 
-            //    else e.CanExecute = false;
-            //}
+                else e.CanExecute = false;
+            }
         }
 
         private void SaveExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            var saveDlg = new SaveFileDialog { Filter = "Text files|*.csv" };
+            var saveDlg = new SaveFileDialog { Filter = "Text files|*.json" };
 
             if (true == saveDlg.ShowDialog())
             {
                 string fileName = saveDlg.FileName;
 
-                using (StreamWriter sw = new StreamWriter(fileName, false, Encoding.Unicode))
-                {
-                    foreach (var emp in DataClients.ItemsSource)
-                    {
-                        sw.WriteLine(emp.ToString());
-                    }
-                }
+                string json = JsonConvert.SerializeObject(DataClients.ItemsSource, Formatting.Indented);
+
+                File.WriteAllText(fileName, json);
 
                 foreach (var client in ViewModel.BankRepository)
                 {
@@ -192,6 +151,5 @@ namespace Modul_13
                 }
             }
         }
-
     }
 }

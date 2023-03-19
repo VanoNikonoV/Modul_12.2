@@ -4,30 +4,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Modul_13.Models
 {
     /// <summary>
     /// Счет для начисления процентов
     /// </summary>
-    public class DepositAccount : Account, ICovAccount<DepositAccount>, IContrAccount<Account>
+    public class DepositAccount : Account, ICovAccount<Account>, IContrAccount<DepositAccount>
     {
-        public DepositAccount()
-        {
-            
-        }
+        
         public DepositAccount(decimal initialBalance) : base(initialBalance) { }
 
-        public DepositAccount MakeDeposit(decimal amount)
+        public Account MakeDeposit(decimal amount)
         {
             this.Balance += amount;
 
             return this;
         }
 
-        public void MakeWithdrawal(Account client, decimal amount)
+        public void MakeWithdrawal(DepositAccount client, decimal amount)
         {
-            client.Balance -= amount;         
+            if (client.Balance >= amount)
+            {
+                client.Balance -= amount;
+            }
+            else MessageBox.Show("Недостаточно средств");
         }
 
         public override void PerformMonthEndTransactions()

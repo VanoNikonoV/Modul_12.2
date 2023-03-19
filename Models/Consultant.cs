@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 
 namespace Modul_13.Models
@@ -52,10 +53,16 @@ namespace Modul_13.Models
 
                 temp.IsChanged = client.Owner.IsChanged;
 
-                clientsForConsultant.Add(new BankClient<Account>(temp));
+                BankClient<Account> clone = new BankClient<Account>(temp);
+
+                clone.Deposit = client.Deposit;
+
+                clone.NoDeposit = client.NoDeposit;
+
+                clientsForConsultant.Add(clone); 
             }
 
-            return clientsForConsultant;
+            return clientsForConsultant; //clientsForConsultant;
         }
 
         /// <summary>

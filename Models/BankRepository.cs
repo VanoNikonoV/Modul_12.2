@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace Modul_13.Models
 {
@@ -7,14 +9,21 @@ namespace Modul_13.Models
     {
         public BankRepository(string path = "")
         {
-            //LoadData(path);
+           //LoadData(@"C:\Users\cmnni\Desktop\ДЗ 13\ClientsBank.json");
 
-            GetClientsRep(20);
+           GetClientsRep(50);
         }
 
         private void LoadData(string path)
         {
-            throw new NotImplementedException();
+            string json = File.ReadAllText(path);
+
+            ObservableCollection<BankClient<Account>> temp = JsonConvert.DeserializeObject<ObservableCollection<BankClient<Account>>>(json);
+
+            foreach (BankClient<Account> client in temp)
+            {
+                this.Add(client);
+            }
         }
 
         public void ReplaceClient(int index, Client editClient)
@@ -36,7 +45,7 @@ namespace Modul_13.Models
 
             Random random = new Random();
 
-            for (long i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 telefon += i;
 
@@ -48,7 +57,11 @@ namespace Modul_13.Models
                     telefon.ToString(),
                     passport.ToString());
 
-                this.Add(new BankClient<Account> (_c)); 
+                this.Add(new BankClient<Account> (_c));
+
+                this[i].AddAccount(AccountType.Deposit, 100);
+                this[i].AddAccount(AccountType.NoDeposit, 200);
+
             }
         }
 

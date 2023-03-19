@@ -9,7 +9,7 @@
       xmlns:cmds="clr-namespace:Modul_13.Commands" 
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="230">
-    
+
     <Page.Resources>
         <DataTemplate x:Key="Temp">
             <StackPanel>
@@ -17,10 +17,10 @@
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
-    
+
     <StackPanel  Orientation="Vertical" 
                  HorizontalAlignment="Center" Cursor="Hand" 
-                 Background="#FFFEFEFE">
+                 Background="#FFFEFEFE" DataContextChanged="CurrentClientChanged">
 
         <Grid Margin="0 10 0 0" Cursor="No">
             <Grid.ColumnDefinitions>
@@ -98,7 +98,8 @@
 
         <Grid x:Name ="DepositInfo" Uid="Deposit">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="60"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -106,15 +107,15 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-            
-            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                    Text="На депозитном счёте:" FontSize="14" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Bottom" FontWeight="Bold"/>
 
-            <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                    FontSize="16" Width="200" Cursor="No"
-                    HorizontalAlignment="Center" 
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+                    Text="На депозитном счёте:" FontSize="14" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Bottom" FontWeight="Bold" Margin="30,0,0,0"/>
+
+            <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                    FontSize="16" Width="195" Cursor="No"
+                    HorizontalAlignment="Left" 
                     VerticalAlignment="Center" 
                     
                     IsReadOnly="True"
@@ -123,15 +124,19 @@
                     FallbackValue=счет не открыт,
                     RelativeSource={RelativeSource AncestorType={x:Type Page}, 
                     Mode=FindAncestor}, 
-                    UpdateSourceTrigger=PropertyChanged}" FlowDirection="RightToLeft"/>
-            
+                    UpdateSourceTrigger=PropertyChanged}" 
+                     FlowDirection="RightToLeft" Margin="15,0,0,0"/>
+
             <TextBox x:Name="SumAddDeposit_TextBox" 
                      Grid.Row="2" Grid.Column="0" 
-                     FontSize="16" Width="120" 
-                     HorizontalAlignment="Center" 
-                     VerticalAlignment="Center" FlowDirection="RightToLeft"/>
+                     FontSize="16" Width="80" 
+                     HorizontalAlignment="Left" 
+                     VerticalAlignment="Center" 
+                     FlowDirection="RightToLeft" 
+                     Margin="15,0,0,0" Cursor="Hand" 
+                     GotFocus="FocusDeposit_TextBox"/>
 
-            <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+            <Button Grid.Row="2" Grid.Column="1"
                     Command="{Binding PanelWorkingWithDepositViewModel.MakeDepositCommand, 
                     Mode=OneWay, 
                     RelativeSource={RelativeSource FindAncestor, 
@@ -139,34 +144,54 @@
                     CommandParameter="{Binding Uid, ElementName=DepositInfo}"
                     Cursor="Hand"
                     Background="Black"
-                    ToolTip="Пополнить счет"
-                    BorderBrush="{x:Null}">
+                    ToolTip="Пополнить депозитный счет"
+                    BorderBrush="{x:Null}" Margin="0,4,0,4">
                 <materialDesign:PackIcon Kind="BankTransferIn" Width="25" 
                                              Height="25" 
                                              HorizontalAlignment="Center"
                                              VerticalAlignment="Center"/>
             </Button>
+
+            <Button  HorizontalAlignment="Center"
+                Grid.Column="3" Grid.Row="2"
+                Background="Black" BorderBrush="{x:Null}"
+                Cursor="Hand" 
+                Command="{Binding PanelWorkingWithDepositViewModel.MakeTransfer, 
+                Mode=OneWay, 
+                RelativeSource={RelativeSource FindAncestor, 
+                AncestorType={x:Type local:PanelWorkingWithDeposit}}}" 
+                FontWeight="Bold"
+                CommandParameter="{Binding Uid, ElementName=DepositInfo}"
+                ToolTip="Перевод между счетами или другому клиенту">
+
+                <materialDesign:PackIcon Kind="BankTransfer" Width="25" 
+                                         Height="25" 
+                                         HorizontalAlignment="Center"/>
+            </Button>
+
         </Grid>
 
         <Grid x:Name ="NoDepositInfo" Uid="NoDeposit">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="60"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="40"/>
-        </Grid.RowDefinitions>
-            
-        <TextBlock Text="На недепозитном счёте:" FontSize="14"
-                   Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Bottom" FontWeight="Bold"/>
-        
-        <TextBox    FontSize="16" Width="200" Cursor="No"
-                    Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
-                    HorizontalAlignment="Center" 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="51.8"/>
+                <ColumnDefinition Width="8.2"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="На недепозитном счёте:" FontSize="14"
+                   Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Bottom" FontWeight="Bold" Margin="27,0,0,0"/>
+
+            <TextBox FontSize="16" Width="195" Cursor="No"
+                    Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4"
+                    HorizontalAlignment="Left" 
                     VerticalAlignment="Center" 
                     IsReadOnly="True"
                     Text="{Binding Path=DataContext.NoDeposit.Balance, 
@@ -174,15 +199,19 @@
                     FallbackValue=счет не открыт,
                     RelativeSource={RelativeSource AncestorType={x:Type Page}, 
                     Mode=FindAncestor}, 
-                    UpdateSourceTrigger=PropertyChanged}" FlowDirection="RightToLeft"/>
-            
+                    UpdateSourceTrigger=PropertyChanged}" 
+                    Margin="20,0,0,0" FlowDirection="RightToLeft"/>
+
             <TextBox x:Name="SumAddNoDeposit_TextBox"  
                      Grid.Row="2" Grid.Column="0" 
-                     FontSize="16" Width="120"
-                     HorizontalAlignment="Center" 
-                     VerticalAlignment="Center" FlowDirection="RightToLeft"/>
-            
-            <Button Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                     FontSize="16" Width="80"
+                     HorizontalAlignment="Left" 
+                     VerticalAlignment="Center" 
+                     FlowDirection="RightToLeft"
+                     Margin="18,0,0,0"
+                     GotFocus="FocusNoDeposit_TextBox"/>
+
+            <Button Grid.Row="2" Grid.Column="1" 
                     Command="{Binding PanelWorkingWithDepositViewModel.MakeDepositCommand, 
                     Mode=OneWay, 
                     RelativeSource={RelativeSource FindAncestor, 
@@ -190,12 +219,28 @@
                     CommandParameter="{Binding Uid, ElementName=NoDepositInfo}"
                     Cursor="Hand"
                     Background="Black"
-                    ToolTip="Пополнить счет"
-                    BorderBrush="{x:Null}">
+                    ToolTip="Пополнить недепозитный счет"
+                    BorderBrush="{x:Null}" Margin="0,4,0,4">
                 <materialDesign:PackIcon Kind="BankTransferIn" Width="25" 
                                              Height="25" 
                                              HorizontalAlignment="Center"
                                              VerticalAlignment="Center"/>
+            </Button>
+
+            <Button  HorizontalAlignment="Left"
+                Grid.Column="2" Grid.Row="2"
+                Background="Black" BorderBrush="{x:Null}"
+                Cursor="Hand" 
+                Command="{Binding PanelWorkingWithDepositViewModel.MakeTransfer, 
+                Mode=OneWay, 
+                RelativeSource={RelativeSource FindAncestor, 
+                AncestorType={x:Type local:PanelWorkingWithDeposit}}}" FontWeight="Bold"
+                CommandParameter="{Binding Uid, ElementName=NoDepositInfo}"
+                ToolTip="Перевод между счетами или другому клиенту" Grid.ColumnSpan="2" Margin="2,4,0,4">
+
+                <materialDesign:PackIcon Kind="BankTransfer" Width="25" 
+                                         Height="25" 
+                                         HorizontalAlignment="Center"/>
             </Button>
 
         </Grid>
@@ -203,18 +248,14 @@
                    TextWrapping="Wrap" HorizontalAlignment="Center" 
                    VerticalAlignment="Center"/>
 
-        <ListView x:Name="List_OnlyDepositRepository"
-            ItemsSource="{Binding PanelWorkingWithDepositViewModel.OnlyDepositRepository,
-            Mode=OneWay, UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={RelativeSource FindAncestor, 
-            AncestorType={x:Type local:PanelWorkingWithDeposit}}}"
+        <ListView x:Name="List_SortRepository"
             ScrollViewer.VerticalScrollBarVisibility="Visible"
             ScrollViewer.CanContentScroll="True"
             Width="190"
-            IsSynchronizedWithCurrentItem="True" 
-            MinHeight="220" MaxHeight="300" 
+            IsSynchronizedWithCurrentItem="False" 
+            MinHeight="180" MaxHeight="230"    
             SelectionChanged="SelectedRecipient">
-            <!--Height="290"-->
+            
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -226,43 +267,15 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="60"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="50"/>
-            </Grid.RowDefinitions>
-            
-            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                Text="Сумма перевода" FontSize="18" 
-                       HorizontalAlignment="Center" 
-                       VerticalAlignment="Bottom" FontWeight="Bold"/>
-        <TextBox x:Name="SumTransfer_TextBox" FontSize="18" Width="120"
-                 Grid.Column="0" Grid.Row="1"
-                 HorizontalAlignment="Center" 
-                 VerticalAlignment="Center" 
-                 Margin="0 10 0 10" 
-                 GotFocus="FixingSender_TextBox"/>
+        <Label Content="Отсортируйте получателей:" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="14" />
+        <ComboBox Name="ConditionsForListAccounts" Height="30"
+                  Width="180" FontSize="14"
+                  SelectionChanged="ChangingSelectionListAccounts" 
+                  HorizontalAlignment="Center" IsReadOnly="True">
+            <ComboBoxItem Content="Депозитные счета"/>
+            <ComboBoxItem Content="Недепозитные счета"/>
+            <ComboBoxItem Content="Себе на другой счет"/>
+        </ComboBox>
 
-        <Button x:Name="Transfer_Button" HorizontalAlignment="Center"
-                Grid.Column="1" Grid.Row="1"
-                Background="Black" BorderBrush="{x:Null}"
-                Cursor="Hand" 
-                Command="{Binding PanelWorkingWithDepositViewModel.MakeTransfer, 
-                Mode=OneWay, 
-                RelativeSource={RelativeSource FindAncestor, 
-                AncestorType={x:Type local:PanelWorkingWithDeposit}}}" FontWeight="Bold"
-                CommandParameter="{Binding Text, ElementName=SumTransfer_TextBox}"
-                ToolTip="Перевод между счетами">
-
-                <materialDesign:PackIcon Kind="BankTransfer" Width="25" 
-                                         Height="25" 
-                                         HorizontalAlignment="Center"/>
-         </Button>
-            </Grid>
-      
     </StackPanel>
 </Page>

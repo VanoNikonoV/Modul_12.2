@@ -11,7 +11,7 @@ namespace Modul_13.Interfases
     }
     //Интерфейс с параметром контравариантного типа позволяет своим методам принимать
     //аргументы производных типов, степень наследования у которых меньше, чем у параметра типа интерфейса.
-    public interface IContrAccount<in K> where K : Account
+    public interface IContrAccount<K> where K : Account
     {
         void MakeWithdrawal(K client, decimal amount);
        

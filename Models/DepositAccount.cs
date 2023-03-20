@@ -9,6 +9,7 @@ using System.Windows;
 namespace Modul_13.Models
 {
     /// <summary>
+    /// 
     /// Счет для начисления процентов
     /// </summary>
     public class DepositAccount : Account, ICovAccount<DepositAccount>, IContrAccount<Account>

@@ -133,13 +133,7 @@ namespace Modul_13.ViewModels
                     {
                         Recipient = (Recipient as ICovAccount<Account>).MakeDeposit(amount);
 
-                        IContrAccount<DepositAccount> contr = new DepositAccount(10);
-
-                        IContrAccount<Account> contr1 = contr;
-
-                        contr.MakeWithdrawal(Sender.Deposit, amount);
-
-                        (Recipient as IContrAccount<DepositAccount>).MakeWithdrawal(Sender.Deposit, amount);
+                        (Recipient as IContrAccount<Account>).MakeWithdrawal(Sender.Deposit, amount);
 
                         SumAddDeposit_TextBox.Text = string.Empty;
                     }

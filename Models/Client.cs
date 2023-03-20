@@ -150,6 +150,7 @@ namespace Modul_13.Models
                 OnPropertyChanged(nameof(Telefon));
             }
         }
+        [JsonProperty("ID")]
         public int ID { get; private set; }
 
         /// <summary>

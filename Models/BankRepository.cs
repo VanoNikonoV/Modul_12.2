@@ -9,9 +9,9 @@ namespace Modul_13.Models
     {
         public BankRepository(string path = "")
         {
-           //LoadData(@"C:\Users\cmnni\Desktop\ДЗ 13\ClientsBank.json");
+           LoadData(@"C:\Users\cmnni\Desktop\ДЗ 13\ClientsBank.json");
 
-           GetClientsRep(50);
+           //GetClientsRep(50);
         }
 
         private void LoadData(string path)

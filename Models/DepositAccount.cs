@@ -11,12 +11,12 @@ namespace Modul_13.Models
     /// <summary>
     /// Счет для начисления процентов
     /// </summary>
-    public class DepositAccount : Account, ICovAccount<Account>, IContrAccount<Account>
+    public class DepositAccount : Account, ICovAccount<DepositAccount>, IContrAccount<Account>
     {
         
         public DepositAccount(decimal initialBalance) : base(initialBalance) { }
 
-        public Account MakeDeposit(decimal amount)
+        public DepositAccount MakeDeposit(decimal amount)
         {
             this.Balance += amount;
 

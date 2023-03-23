@@ -164,9 +164,7 @@ namespace Modul_13.ViewModels
                     else { MWindow.ViewModel.ShowStatusBarText("Нужно ввсети число"); }
 
                     break;
-            }
-
-           
+            } 
         }
 
         /// <summary>

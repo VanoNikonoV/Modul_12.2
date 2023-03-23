@@ -7,11 +7,11 @@ namespace Modul_13.Models
 {
     public class BankRepository: ObservableCollection<BankClient<Account>>
     {
-        public BankRepository(string path = "")
+        public BankRepository(string path)
         {
-           //LoadData(@"C:\Users\cmnni\Desktop\ДЗ 13\ClientsBank.json");
+           LoadData(path);
 
-           GetClientsRep(50);
+           //GetClientsRep(50);
         }
 
         private void LoadData(string path)

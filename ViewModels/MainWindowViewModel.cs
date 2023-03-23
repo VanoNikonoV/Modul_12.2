@@ -26,7 +26,7 @@ namespace Modul_13.ViewModels
         /// определяется на основании выбраного параметра в элементе ListView "DataClients"
         /// принадлежащего MainWindow
         /// </summary>
-        public MainWindow MWindow { get;}
+        public MainWindow MWindow => Application.Current.MainWindow as MainWindow;
 
         private BankClient<Account> currentClient = null;
         public BankClient<Account> CurrentClient { get => currentClient = this.MWindow.DataClients.SelectedItem as BankClient<Account>; }
@@ -50,15 +50,13 @@ namespace Modul_13.ViewModels
 
         public Consultant Consultant { get; } 
 
-        public Meneger Meneger { get; } //??
+        public Meneger Meneger { get; }
         #endregion
 
         //конструктор
-        public MainWindowViewModel(MainWindow mWindow) 
+        public MainWindowViewModel(string path) 
         {
-            this.MWindow= mWindow;
-
-            this.BankRepository = new BankRepository();
+            this.BankRepository = new BankRepository(path);
 
             this.Consultant = new Consultant();
 

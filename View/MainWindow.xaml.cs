@@ -6,6 +6,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Shapes;
 
 namespace Modul_13
 {
@@ -20,13 +21,15 @@ namespace Modul_13
 
         public MainWindow()
         {
-            ViewModel = ViewModel ?? new MainWindowViewModel(this);
-
-            this.DataContext = ViewModel;
-
-            CollectionView = CollectionViewSource.GetDefaultView(ViewModel.BankRepository);
+            InitializeComponent();
+        }
+        public MainWindow(MainWindowViewModel viewModel) : base()
+        {
+            this.ViewModel = viewModel;
             
-            InitializeComponent(); 
+            //CollectionView = new CollectionView();
+
+            
         }
 
         private void CloseWindows(object sender, RoutedEventArgs e)
@@ -41,23 +44,26 @@ namespace Modul_13
         /// <param name="e"></param>
         private void AccessLevel_ComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            switch (AccessLevel_ComboBox.SelectedIndex)
+            if (ViewModel != null)
             {
-                case 0: //консультант
+                switch (AccessLevel_ComboBox.SelectedIndex)
+                {
+                    case 0: //консультант
 
-                    DataClients.ItemsSource = CollectionView;
-                   
-                    break;
+                        DataClients.ItemsSource = CollectionViewSource.GetDefaultView(ViewModel.BankRepository);
 
-                case 1: //менждер
+                        break;
 
-                    DataClients.ItemsSource = CollectionView;
+                    case 1: //менждер
 
-                    break;
+                        DataClients.ItemsSource = CollectionView;
 
-                default:
-                    break;
+                        break;
 
+                    default:
+                        break;
+
+                }
             }
         }
 
@@ -89,7 +95,7 @@ namespace Modul_13
 
         private void SaveCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            foreach (var client in ViewModel.BankRepository)
+            foreach (var client in ViewModel?.BankRepository)
             {
                 if (client.Owner.IsChanged == true) { e.CanExecute = true; break; }
 

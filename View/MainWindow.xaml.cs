@@ -20,7 +20,7 @@ namespace Modul_13
 
         public MainWindow()
         {
-            ViewModel = ViewModel ?? new MainWindowViewModel(this);
+            ViewModel = ViewModel ?? new MainWindowViewModel(@"C:\Users\nikonovia\OneDrive\Будущее\Skillbox\Програмирование\ДЗ 12.2\Modul_12.2\Data\ClientsBank.json");
 
             this.DataContext = ViewModel;
 
@@ -45,8 +45,8 @@ namespace Modul_13
             {
                 case 0: //консультант
 
-                    DataClients.ItemsSource = CollectionView;
-                   
+                    DataClients.ItemsSource = CollectionViewSource.GetDefaultView(ViewModel.Consultant.ViewClientsData(ViewModel.BankRepository));
+
                     break;
 
                 case 1: //менждер

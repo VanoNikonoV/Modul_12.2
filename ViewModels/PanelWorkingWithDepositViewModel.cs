@@ -3,6 +3,7 @@ using Modul_13.Interfases;
 using Modul_13.Models;
 using Modul_13.ViewModels.Base;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -23,6 +24,12 @@ namespace Modul_13.ViewModels
         /// </summary>
         public BankClient<Account> Sender
         {
+            //get
+            //{
+            //    BankClient<Account> client = this.MWindow.DataClients.SelectedItem as BankClient<Account>;
+
+            //    return sender = MWindow.ViewModel.BankRepository.First(i => i.Owner.ID == client.Owner.ID);
+            //}
             get => this.MWindow.DataClients.SelectedItem as BankClient<Account>;
             set { Set(ref sender, value); }
         }

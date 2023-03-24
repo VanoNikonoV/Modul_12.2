@@ -6,6 +6,15 @@ using Modul_13.Interfases;
 namespace Modul_13.Models
 {
     //https://learn.microsoft.com/ru-ru/dotnet/csharp/fundamentals/tutorials/oop
+
+    //    Сделайте так, чтобы в журнале отражались время операции и имя совершившего операцию(консультанта или менеджера) при:
+    // •	открытии счёта;
+    // •	закрытии счёта; 
+    // •	пополнении счёта;
+    // •	переводе между счетами;
+    // •	изменении данных клиента.
+
+
     public class Account : INotifyPropertyChanged
     {
         /// <summary>

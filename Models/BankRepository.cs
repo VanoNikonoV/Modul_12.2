@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 
@@ -9,16 +10,16 @@ namespace Modul_13.Models
     {
         public BankRepository(string path)
         {
-           LoadData(path);
+           LoadData(path);  // Не работает явное приведение Sender.Deposit = (Sender.Deposit as ICovAccount<Account>).MakeDeposit(amount);
 
-           //GetClientsRep(50);
+            GetClientsRep(50);
         }
 
         private void LoadData(string path)
         {
             string json = File.ReadAllText(path);
 
-            ObservableCollection<BankClient<Account>> temp = JsonConvert.DeserializeObject<ObservableCollection<BankClient<Account>>>(json);
+            List<BankClient<Account>> temp = JsonConvert.DeserializeObject<List<BankClient<Account>>>(json);
 
             foreach (BankClient<Account> client in temp)
             {

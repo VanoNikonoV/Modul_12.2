@@ -46,9 +46,12 @@ namespace Modul_13.ViewModels
             }
         }
         /// <summary>
-        /// Выбранный для редакции клиент
+        /// Выбранный из общего списка  клиент для редактирования данных
         /// </summary>
-        public BankClient<Account> CurrentClient { get => this.MWindow.DataClients.SelectedItem as BankClient<Account>; }
+        public BankClient<Account> CurrentClient 
+        { 
+            get => this.MWindow.DataClients.SelectedItem as BankClient<Account>; 
+        }
         public Consultant Consultant { get; }
         public Meneger Meneger { get; }
 
@@ -285,13 +288,30 @@ namespace Modul_13.ViewModels
         /// </summary>
         private void CloseAccount(string selectedAccount)
         {
-            switch (selectedAccount)
+            if (CurrentClient != null)
             {
-                case "Deposit":
-                    CurrentClient.CloseAccount(AccountType.Deposit); break;
-                case "NoDeposit":
-                    CurrentClient.CloseAccount(AccountType.NoDeposit); ; break;
+                BankClient<Account> editClient = bankRepository.First(i => i.Owner.ID == CurrentClient.Owner.ID);
+
+                switch (selectedAccount)
+                {
+                    case "Deposit":
+
+                        CurrentClient.CloseAccount(AccountType.Deposit); //удаление в списке для консультанты
+
+                        editClient.CloseAccount(AccountType.Deposit);  //удаление в общем списке
+
+                        break;
+
+                    case "NoDeposit":
+
+                        CurrentClient.CloseAccount(AccountType.NoDeposit);
+
+                        editClient.CloseAccount(AccountType.NoDeposit);
+
+                        break;
+                }
             }
+            else MWindow.ViewModel.ShowStatusBarText("Выберите клиента");
         }
 
         /// <summary>
@@ -319,15 +339,25 @@ namespace Modul_13.ViewModels
         {
             if (CurrentClient != null)
             {
+                BankClient<Account> editClient = bankRepository.First(i => i.Owner.ID == CurrentClient.Owner.ID);
+
                 switch (selectedAccount)
                 {
                     case "Deposit":
 
-                        CurrentClient.AddAccount(AccountType.Deposit, 100); break;
+                        CurrentClient.AddAccount(AccountType.Deposit, 100);
+
+                        editClient.AddAccount(AccountType.Deposit, 100);
+
+                        break;
 
                     case "NoDeposit":
 
-                        CurrentClient.AddAccount(AccountType.NoDeposit, 100); break;
+                        CurrentClient.AddAccount(AccountType.NoDeposit, 100);
+
+                        editClient.AddAccount(AccountType.NoDeposit, 100);
+
+                        break;
 
                 }
             }

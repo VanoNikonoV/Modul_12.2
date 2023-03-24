@@ -2,6 +2,7 @@
 using Modul_13.Models;
 using Modul_13.ViewModels.Base;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
@@ -364,5 +365,6 @@ namespace Modul_13.ViewModels
             else MWindow.ViewModel.ShowStatusBarText("Выберите клиента");
         }
         #endregion
+ 
     }
 }

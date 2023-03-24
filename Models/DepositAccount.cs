@@ -15,7 +15,14 @@ namespace Modul_13.Models
     public class DepositAccount : Account, ICovAccount<Account>, IContrAccount<Account>
     {
         
-        public DepositAccount(decimal initialBalance) : base(initialBalance) { }
+        public DepositAccount(decimal initialBalance) : base(initialBalance) 
+        {
+            base.Opened += (sender, e) =>
+            {
+                sender = this;
+                e = (new AccountStateHandler(date: DateTime.Now, notes: "open", whoChangedIt: "консультан", amount: initialBalance));
+            };
+        }
 
         public Account MakeDeposit(decimal amount)
         {
@@ -39,6 +46,8 @@ namespace Modul_13.Models
             {
                 this.Balance *= 0.05m;
             }
-        } 
+        }
+        
+       
     }
 }

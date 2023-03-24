@@ -14,7 +14,6 @@ namespace Modul_13.Models
     // •	переводе между счетами;
     // •	изменении данных клиента.
 
-
     public class Account : INotifyPropertyChanged
     {
         /// <summary>
@@ -53,6 +52,8 @@ namespace Modul_13.Models
             accountNumberSeed++;
 
             Balance = initialBalance;
+
+            //Opened?.Invoke(this, new AccountStateHandler(date: DateTime.Now, notes: "open", whoChangedIt: "консультан", amount: initialBalance));
         }
 
         public Account()
@@ -66,6 +67,10 @@ namespace Modul_13.Models
         /// </summary>
         public virtual void PerformMonthEndTransactions() { }
 
+        /// <summary>
+        /// Событие возникающее при открытии счета
+        /// </summary>
+        protected internal event EventHandler<AccountStateHandler> Opened;
 
         #region PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

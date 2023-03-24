@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Modul_13")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Nikonov")]
 [assembly: AssemblyProduct("Modul_13")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]

@@ -16,11 +16,13 @@ namespace Modul_13
     {
         public MainWindowViewModel ViewModel { get; set; }
 
+        private readonly string path = @"\ClientsBank.json";
+
         public  ICollectionView CollectionView { get; private set; }
 
         public MainWindow()
         {
-            ViewModel = ViewModel ?? new MainWindowViewModel(@"C:\Users\nikonovia\OneDrive\Будущее\Skillbox\Програмирование\ДЗ 12.2\Modul_12.2\Data\ClientsBank.json");
+            ViewModel = ViewModel ?? new MainWindowViewModel(path, this);
 
             this.DataContext = ViewModel;
 
@@ -57,7 +59,6 @@ namespace Modul_13
 
                 default:
                     break;
-
             }
         }
 

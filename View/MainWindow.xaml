@@ -168,7 +168,7 @@
                 Background="{StaticResource MyGridBrushResource}"
                 Margin="0,60,0,10"
                 ItemTemplate="{StaticResource InfoChages}"
-                ItemsSource="{Binding SelectedItem.Owner.InfoChanges, ElementName=DataClients, UpdateSourceTrigger=PropertyChanged}" 
+                ItemsSource="{Binding BankRepository.LogClient, UpdateSourceTrigger=PropertyChanged}" 
                 HorizontalAlignment="Stretch"
                 Width="{Binding ColumnDefinitions/ActualWidth, ElementName=СhangesGride, Mode=OneWay}"/>
         </Grid>

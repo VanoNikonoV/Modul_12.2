@@ -4,6 +4,7 @@ using Modul_13.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace Modul_13.ViewModels
@@ -62,9 +63,16 @@ namespace Modul_13.ViewModels
 
             this.Consultant = new Consultant();
 
-            this.Meneger = new Meneger();
+            this.Meneger = new Meneger(); 
+            
+            Meneger.OnEditClient += Meneger_OnEditClient;
 
             this.BankRepository = MWindow.ViewModel.BankRepository;
+        }
+
+        private void Meneger_OnEditClient(InformationAboutChanges arg)
+        {
+            MWindow.ViewModel.BankRepository.LogClient.Add(arg);
         }
 
         #region Команды
@@ -142,7 +150,6 @@ namespace Modul_13.ViewModels
             }
             return false;
         }
-
         /// <summary>
         /// Опреляет допускается ли редактировать данные клиента
         /// </summary>
@@ -158,6 +165,7 @@ namespace Modul_13.ViewModels
 
             else { return false; }
         }
+
         /// <summary>
         /// Метод редактирования имени клиента
         /// </summary>
@@ -173,6 +181,7 @@ namespace Modul_13.ViewModels
                 bankRepository.ReplaceClient(index, changedClient);
             }
         }
+
         /// <summary>
         /// Метод редактирование телефона клиента
         /// </summary>
@@ -180,6 +189,8 @@ namespace Modul_13.ViewModels
         private void EditTelefon(string telefon)
         {
             string whatChanges = string.Format(CurrentClient.Owner.Telefon + @" на " + telefon.Trim());
+
+            //Client changedClient = Consultant.EditeTelefonClient(telefon, CurrentClient.Owner);
 
             CurrentClient.Owner.Telefon = telefon;
 

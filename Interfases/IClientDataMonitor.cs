@@ -7,6 +7,6 @@ namespace Modul_13.Interfases
     {
         IEnumerable<BankClient<Account>> ViewClientsData(IEnumerable<BankClient<Account>> clients);
 
-        Client EditeTelefonClient( string newData, Client client);
+        Client EditeTelefonClient(string newData, Client client);
     }
 }

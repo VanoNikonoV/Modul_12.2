@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Modul_13.View;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -42,13 +43,27 @@ namespace Modul_13.Models
 
                     (this.FirstName, this.MiddleName,
                      this.SecondName, this.Telefon,
-                     this.SeriesAndPassportNumber, this.DateOfEntry, 
+                     this.SeriesAndPassportNumber, this.DateOfEntry,
                      this.ID, this.IsChanged) =
 
                     (firstName, middleName,
                      secondName, telefon,
-                     seriesAndPassportNumber, DateTime.Now, 
+                     seriesAndPassportNumber, DateTime.Now,
                      Client.NextID(), false);
+
+        //public Client(string firstName, string middleName,
+        //              string secondName, string telefon,
+        //              string seriesAndPassportNumber)
+        //{
+        //    this.FirstName = firstName;
+        //    this.MiddleName = middleName;         
+        //    this.SecondName = secondName;
+        //    this.Telefon = telefon;
+        //    this.SeriesAndPassportNumber = seriesAndPassportNumber;
+        //    this.ID = Client.NextID();
+        //    this.IsChanged = false;
+        //}    
+
 
         /// <summary>
         /// Вызывается при редактировании, перезаписывании клиента
@@ -102,7 +117,7 @@ namespace Modul_13.Models
                 if (this.firstName == value) return;
 
                     this.firstName = value;
-                    OnPropertyChanged(nameof(FirstName));        
+                    OnPropertyChanged(nameof(FirstName));
             }
         }
         /// <summary>
@@ -226,6 +241,12 @@ namespace Modul_13.Models
         private bool isChanged;
 
         #endregion
+
+        /// <summary>
+        /// Событие возникающее при создании клиента
+        /// </summary>
+        protected internal event EventHandler<ClientStateHandler> newClient;
+
 
         #region PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

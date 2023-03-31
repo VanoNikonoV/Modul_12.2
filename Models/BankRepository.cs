@@ -1,8 +1,12 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data.SqlClient;
 using System.IO;
+using System.Windows;
 
 namespace Modul_13.Models
 {
@@ -10,7 +14,7 @@ namespace Modul_13.Models
     {
         public BankRepository(string path)
         {
-           LoadData(path);  // Не работает явное приведение Sender.Deposit = (Sender.Deposit as ICovAccount<Account>).MakeDeposit(amount);
+           //LoadData(path);  // Не работает явное приведение Sender.Deposit = (Sender.Deposit as ICovAccount<Account>).MakeDeposit(amount);
 
             GetClientsRep(50);
         }
@@ -32,12 +36,25 @@ namespace Modul_13.Models
             this[index].Owner = editClient;
         }
 
-        public void ReplaceDeposit(BankClient<Account> currentClient)
-        {
-            int i = this.IndexOf(currentClient);
+        private List<InformationAboutChanges> logClient;
+        
+        /// <summary>
+        /// Журнал событий произходящих с клиентами
+        /// </summary>
+        public List<InformationAboutChanges> LogClient 
+        
+        { 
+            get => logClient ?? (logClient = new List<InformationAboutChanges>());
 
-            this[i] = currentClient;
-        }
+            set {
+                if (this.logClient == value) return;
+                        
+                this.logClient = value;
+
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(LogClient)));
+            }
+        } 
+
         #region Автогенерация данных
         private void GetClientsRep(int count)
         {
@@ -143,5 +160,7 @@ namespace Modul_13.Models
 
         }
         #endregion
+
+
     }
 }

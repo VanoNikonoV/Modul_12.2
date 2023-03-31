@@ -3,6 +3,8 @@ using Modul_13.Models;
 using Modul_13.View;
 using Modul_13.ViewModels.Base;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -26,7 +28,7 @@ namespace Modul_13.ViewModels
         /// определяется на основании выбраного параметра в элементе ListView "DataClients"
         /// принадлежащего MainWindow
         /// </summary>
-        public MainWindow MWindow => Application.Current.MainWindow as MainWindow;
+        public MainWindow MWindow { get; }
 
         private BankClient<Account> currentClient = null;
         public BankClient<Account> CurrentClient { get => currentClient = this.MWindow.DataClients.SelectedItem as BankClient<Account>; }
@@ -54,14 +56,42 @@ namespace Modul_13.ViewModels
         #endregion
 
         //конструктор
-        public MainWindowViewModel(string path) 
+        public MainWindowViewModel(string path, MainWindow mWindow) 
         {
             this.BankRepository = new BankRepository(path);
 
+            this.MWindow = mWindow;
+
             this.Consultant = new Consultant();
 
-            this.Meneger = new Meneger();   
+            this.Meneger = new Meneger();
+
+            //this.BankRepository.CollectionChanged += BankRepository_CollectionChanged;
         }
+
+       //private void BankRepository_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+       // {
+       //     // They removed something. 
+       //     if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+       //     {
+                
+       //         foreach (BankClient<Account> p in e.OldItems)
+       //         {
+       //             Console.WriteLine(p.ToString());
+       //         }
+                
+       //     }
+
+            
+       //     if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+       //     {
+       //         foreach (BankClient<Account> p in e.NewItems)
+       //         {
+       //             logClient.Add(p.ToString());
+
+       //         }
+       //     }
+       // }
 
         #region Команды
         private RelayCommand newClientAddCommand = null;
@@ -110,9 +140,11 @@ namespace Modul_13.ViewModels
             {
                 //if (!BankRepository.Contains(_windowNewClient.NewClient))
                 //{
+
                     BankClient<Account> newAccount = new BankClient<Account>(_windowNewClient.NewClient);
-                    
+
                     BankRepository.Add(newAccount);
+
                 //}
 
                 //else ShowStatusBarText("Клиент с такими данными уже существует");

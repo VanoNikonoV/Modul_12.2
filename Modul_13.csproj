@@ -73,6 +73,7 @@
     <Compile Include="Models\BankClient.cs" />
     <Compile Include="Models\BankRepository.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\ClientStateHandler.cs" />
     <Compile Include="Models\NoDepositAccount.cs" />
     <Compile Include="Models\DepositAccount.cs" />
     <Compile Include="Models\Transaction.cs" />

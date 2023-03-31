@@ -2,6 +2,8 @@
 using Modul_13.Models;
 using Modul_13.View;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 
 namespace Modul_13.ViewModels
@@ -17,7 +19,7 @@ namespace Modul_13.ViewModels
         public NewClientWindowViewModel(NewClientWindow window)
         {
             _window = window;
-            newClient = new Client();
+            newClient = new Client(); 
         }
 
         private RelayCommand addClientCommand = null;
@@ -25,6 +27,7 @@ namespace Modul_13.ViewModels
 
         private void AddClient()
         {
+
             newClient = new Client(firstName: _window.FirstNameTextBox.Text,
                                   middleName: _window.MidlleNameTextBox.Text,
                                   secondName: _window.SecondNameTextBox.Text,
@@ -33,6 +36,7 @@ namespace Modul_13.ViewModels
                                    currentId: newClient.ID,
                                     dateTime: DateTime.Now,
                                    isChanged: false);
+
 
             if (newClient.Error == string.Empty || newClient.IsValid == true)
             {

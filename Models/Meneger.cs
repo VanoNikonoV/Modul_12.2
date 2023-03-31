@@ -26,9 +26,11 @@ namespace Modul_13.Models
         {
             base.EditeTelefonClient(newTelefon, client);
 
-            var x = client.InfoChanges[client.InfoChanges.Count-1];
+            //var x = client.InfoChanges[client.InfoChanges.Count-1];
 
-            x.WhoChangedIt = nameof(Meneger);
+            //x.WhoChangedIt = nameof(Meneger);
+
+            OnEditClient?.Invoke(new InformationAboutChanges(DateTime.Now, "Telefon", this.GetType().Name, $"Замене {client.Telefon} на {newTelefon}"));
 
             return client;
                 
@@ -52,10 +54,12 @@ namespace Modul_13.Models
                                               currentId: client.ID,
                                                dateTime: DateTime.Now,
                                               isChanged: true);
-           
-            changeClient.InfoChanges = client.InfoChanges; //копирую старую информацию
 
-            changeClient.InfoChanges.Add(new InformationAboutChanges(DateTime.Now, whatChanges, "замена", nameof(Meneger)));
+            //changeClient.InfoChanges = client.InfoChanges; //копирую старую информацию
+
+            //changeClient.InfoChanges.Add(new InformationAboutChanges(DateTime.Now, whatChanges, "замена", nameof(Meneger)));
+
+            OnEditClient?.Invoke( new InformationAboutChanges(DateTime.Now, "First Name",  this.GetType().Name, $"Замене {client.FirstName} на {changeClient.FirstName}"));
 
             return changeClient;
         }
@@ -78,6 +82,8 @@ namespace Modul_13.Models
                                               currentId: client.ID,
                                                dateTime: DateTime.Now,
                                               isChanged: true);
+
+            OnEditClient?.Invoke(new InformationAboutChanges(DateTime.Now, "Telefon", this.GetType().Name, $"Замене {client.MiddleName} на {newMiddleName}"));
 
             changeClient.InfoChanges = client.InfoChanges; //копирую старую информацию
 
@@ -136,5 +142,7 @@ namespace Modul_13.Models
 
             return changeClient;
         }
+
+        public event Action<InformationAboutChanges> OnEditClient;
     }
 }

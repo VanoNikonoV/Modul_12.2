@@ -7,6 +7,8 @@ namespace Modul_13.Models
 {
     public class Consultant : IClientDataMonitor
     {
+        public event Action<InformationAboutChanges> OnEditClient;
+
         public Consultant() {  }
       
         /// <summary>
@@ -17,13 +19,24 @@ namespace Modul_13.Models
         /// <returns>Клент с новым номером</returns>
         public Client EditeTelefonClient(string newTelefon, Client client)
         {
-            client.Telefon = newTelefon;
+            OnEditClient?.Invoke(new InformationAboutChanges(DateTime.Now, this.GetType().Name, $"Замене {client.Telefon} на {newTelefon}", client.ID));
 
-            client.DateOfEntry = DateTime.Now;
+            Client changeClient = new Client(firstName: client.FirstName,
+                                             middleName: client.MiddleName,
+                                             secondName: client.SecondName,
+                                                telefon: newTelefon,
+                                seriesAndPassportNumber: client.SeriesAndPassportNumber,
+                                              currentId: client.ID,
+                                               dateTime: DateTime.Now,
+                                              isChanged: true);
 
-            client.IsChanged = true;
+            //client.Telefon = newTelefon;
 
-            return client;
+            //client.DateOfEntry = DateTime.Now;
+
+            changeClient.IsChanged = true;
+
+            return changeClient;
         }
 
         /// <summary>

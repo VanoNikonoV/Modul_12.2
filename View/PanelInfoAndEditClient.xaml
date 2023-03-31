@@ -193,7 +193,7 @@
 
             <TextBox x:Name="EditTelefon_TextBox"
                          FontSize="18" Width="135"
-                         Text="{Binding Path=DataContext.Owner.Telefon, Mode=TwoWay,
+                         Text="{Binding Path=DataContext.Owner.Telefon, Mode=OneWay,
                          RelativeSource={RelativeSource AncestorType={x:Type Page}, 
                          Mode=FindAncestor}, 
                          UpdateSourceTrigger=PropertyChanged, 

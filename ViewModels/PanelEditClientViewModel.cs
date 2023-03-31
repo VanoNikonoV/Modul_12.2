@@ -63,6 +63,8 @@ namespace Modul_13.ViewModels
 
             this.Consultant = new Consultant();
 
+            Consultant.OnEditClient += Meneger_OnEditClient;
+
             this.Meneger = new Meneger(); 
             
             Meneger.OnEditClient += Meneger_OnEditClient;
@@ -188,36 +190,44 @@ namespace Modul_13.ViewModels
         /// <param name="telefon"></param>
         private void EditTelefon(string telefon)
         {
-            string whatChanges = string.Format(CurrentClient.Owner.Telefon + @" на " + telefon.Trim());
+            //string whatChanges = string.Format(CurrentClient.Owner.Telefon + @" на " + telefon.Trim());
 
             //Client changedClient = Consultant.EditeTelefonClient(telefon, CurrentClient.Owner);
 
-            CurrentClient.Owner.Telefon = telefon;
+            //CurrentClient.Owner.Telefon = telefon;
 
             if (CurrentClient.Owner.IsValid)
             {
                 //изменения в коллекции банка, по ID клиента
-                BankClient<Account> editClient = bankRepository.First(i => i.Owner.ID == CurrentClient.Owner.ID); // try
-
-                editClient.Owner.Telefon = telefon;
+                BankClient<Account> editClient = BankRepository.First(i => i.Owner.ID == CurrentClient.Owner.ID); // try
 
                 switch (this.AccessLevel)
                 {
                     case 0: //консультант
 
-                        editClient.Owner.InfoChanges.Add(new InformationAboutChanges(DateTime.Now, whatChanges, "замена", nameof(Consultant)));
+                        editClient.Owner = Consultant.EditeTelefonClient(telefon, editClient.Owner);
+
+                       // CurrentClient.Owner = Consultant.EditeTelefonClient(telefon, editClient.Owner);
+
+                        //editClient.Owner.InfoChanges.Add(new InformationAboutChanges(DateTime.Now, whatChanges, "замена", nameof(Consultant)));
 
                         break;
 
                     case 1: //менждер
 
-                        editClient.Owner.InfoChanges.Add(new InformationAboutChanges(DateTime.Now, whatChanges, "замена", nameof(Meneger)));
+                        Consultant.OnEditClient -= Meneger_OnEditClient;
+
+                        editClient.Owner = Meneger.EditeTelefonClient(telefon, editClient.Owner);
+                        
+                        Consultant.OnEditClient += Meneger_OnEditClient;
+                        //editClient.Owner.InfoChanges.Add(new InformationAboutChanges(DateTime.Now, whatChanges, "замена", nameof(Meneger)));
 
                         break;
 
                     default:
                         break;
                 }
+                
             }
             else
             {

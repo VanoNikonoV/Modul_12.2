@@ -42,11 +42,11 @@ namespace Modul_13.Models
         /// Журнал событий произходящих с клиентами
         /// </summary>
         public List<InformationAboutChanges> LogClient 
-        
         { 
             get => logClient ?? (logClient = new List<InformationAboutChanges>());
 
-            set {
+            set 
+            {
                 if (this.logClient == value) return;
                         
                 this.logClient = value;

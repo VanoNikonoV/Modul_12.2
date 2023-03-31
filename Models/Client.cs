@@ -157,7 +157,7 @@ namespace Modul_13.Models
         {
             get { return this.telefon; }
 
-            set
+            private set 
             {
                 if (telefon == value) return;
            

@@ -8,44 +8,40 @@ namespace Modul_13.Models
         /// </summary>
     public class InformationAboutChanges : INotifyPropertyChanged
 {
-        public InformationAboutChanges( DateTime dateTime, 
-                                        string whatChanges = "", 
-                                        string typeOfChanges = "", 
-                                        string whoChangedIt = "") =>
+        /// <summary>
+        /// Информация об изменениях личных данных клиента
+        /// </summary>
+        /// <param name="dateTime">Дата изменения</param>
+        /// <param name="whoChangedIt">Кто произмел изменение</param>
+        /// <param name="note">Заметка о записи</param>
+        /// <param name="idClient">ID клиента запись о котором изменялась</param>
+        public InformationAboutChanges(DateTime dateTime, string whoChangedIt, string note, int idClient) =>
             
             (this.DateChenges, 
-            this.WhatChanges, this.TypeOfChanges, 
-            this.WhoChangedIt) =
+            this.WhoChangedIt, this.Note, this.IdClient) =
 
-            (dateTime, whatChanges, 
-            typeOfChanges, whoChangedIt);
+            (dateTime, whoChangedIt, note, idClient);
             
         /// <summary>
         /// Дата изменения
         /// </summary>
-        public DateTime DateChenges { get; set; }
+        public DateTime DateChenges { get;  }
 
-
-        private string whatChanges;
-        /// <summary>
-        /// Какое поле измненилось
-        /// </summary>
-        public string WhatChanges
-        { 
-            get { return this.whatChanges; }
-            set {
-                    this.whatChanges = value;
-                    OnPropertyChanged(nameof(WhatChanges));
-                }
-        }
-        /// <summary>
-        /// Тип изменений
-        /// </summary>
-        public string TypeOfChanges { get; set; }
         /// <summary>
         /// Кто произмел изменение
         /// </summary>
-        public string WhoChangedIt { get; set; }
+        public string WhoChangedIt { get; }
+
+        /// <summary>
+        /// Заметка о записи
+        /// </summary>
+        public string Note { get;}
+
+        /// <summary>
+        /// ID клиента запись о котором изменялась
+        /// </summary>
+        public int IdClient { get; }
+
 
         #region PropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

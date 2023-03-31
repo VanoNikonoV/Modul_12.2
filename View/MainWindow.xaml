@@ -31,15 +31,9 @@
                 </TextBlock>
 
                 <TextBlock
-                        Text="{Binding StringFormat=Измения: {0},Path=WhatChanges}" TextWrapping="Wrap"
+                        Text="{Binding StringFormat=Измения: {0},Path=Note}" TextWrapping="Wrap"
                         FontSize="14" 
                         Foreground="Red" FontWeight="Bold">
-                </TextBlock>
-
-                <TextBlock
-                        Text="{Binding StringFormat=Тип изменений: {0},Path=TypeOfChanges}"
-                        FontSize="14"  
-                        Foreground="Green" FontWeight="Bold">
                 </TextBlock>
 
                 <TextBlock

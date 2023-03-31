@@ -24,16 +24,15 @@ namespace Modul_13.Models
         /// <returns>Клент с новым номером</returns>
         public new Client EditeTelefonClient(string newTelefon, Client client )
         {
-            base.EditeTelefonClient(newTelefon, client);
+            Client temp = base.EditeTelefonClient(newTelefon, client);
 
+            if (temp.IsValid == true)
+            {
+                OnEditClient?.Invoke(new InformationAboutChanges(DateTime.Now, this.GetType().Name, $"замена {client.Telefon} на {newTelefon}", client.ID));
+            }
             //var x = client.InfoChanges[client.InfoChanges.Count-1];
-
             //x.WhoChangedIt = nameof(Meneger);
-
-            OnEditClient?.Invoke(new InformationAboutChanges(DateTime.Now, "Telefon", this.GetType().Name, $"Замене {client.Telefon} на {newTelefon}"));
-
-            return client;
-                
+            return temp;   
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace Modul_13.Models
 
             //changeClient.InfoChanges.Add(new InformationAboutChanges(DateTime.Now, whatChanges, "замена", nameof(Meneger)));
 
-            OnEditClient?.Invoke( new InformationAboutChanges(DateTime.Now, "First Name",  this.GetType().Name, $"Замене {client.FirstName} на {changeClient.FirstName}"));
+            OnEditClient?.Invoke(new InformationAboutChanges(DateTime.Now,this.GetType().Name, $"замена {client.FirstName} на {changeClient.FirstName}", client.ID));
 
             return changeClient;
         }
@@ -83,11 +82,11 @@ namespace Modul_13.Models
                                                dateTime: DateTime.Now,
                                               isChanged: true);
 
-            OnEditClient?.Invoke(new InformationAboutChanges(DateTime.Now, "Telefon", this.GetType().Name, $"Замене {client.MiddleName} на {newMiddleName}"));
+            OnEditClient?.Invoke(new InformationAboutChanges(DateTime.Now, this.GetType().Name, $"Замене {client.MiddleName} на {newMiddleName}", client.ID));
 
-            changeClient.InfoChanges = client.InfoChanges; //копирую старую информацию
+            //changeClient.InfoChanges = client.InfoChanges; //копирую старую информацию
 
-            changeClient.InfoChanges.Add(new InformationAboutChanges(DateTime.Now, whatChanges, "замена", nameof(Meneger)));
+            //changeClient.InfoChanges.Add(new InformationAboutChanges(DateTime.Now, whatChanges, "замена", nameof(Meneger)));
 
             return changeClient;
         }
@@ -111,9 +110,9 @@ namespace Modul_13.Models
                                                dateTime: DateTime.Now,
                                               isChanged: true);
 
-            changeClient.InfoChanges = client.InfoChanges; //копирую старую информацию
+            //changeClient.InfoChanges = client.InfoChanges; //копирую старую информацию
 
-            changeClient.InfoChanges.Add(new InformationAboutChanges(DateTime.Now, whatChanges, "замена", nameof(Meneger)));
+            //changeClient.InfoChanges.Add(new InformationAboutChanges(DateTime.Now, whatChanges, "замена", nameof(Meneger)));
 
             return changeClient;
         }
@@ -136,9 +135,9 @@ namespace Modul_13.Models
                                                dateTime: DateTime.Now,
                                               isChanged: true);
 
-            changeClient.InfoChanges = client.InfoChanges; //копирую старую информацию
+            //changeClient.InfoChanges = client.InfoChanges; //копирую старую информацию
 
-            changeClient.InfoChanges.Add(new InformationAboutChanges(DateTime.Now, whatChanges, "замена", nameof(Meneger)));
+            //changeClient.InfoChanges.Add(new InformationAboutChanges(DateTime.Now, whatChanges, "замена", nameof(Meneger)));
 
             return changeClient;
         }

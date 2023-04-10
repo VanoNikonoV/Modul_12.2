@@ -154,7 +154,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="TextFile1.txt" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\A_logo.png" />
     <Resource Include="Images\mastercard.png" />

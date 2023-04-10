@@ -205,6 +205,14 @@ namespace Modul_13.ViewModels
                 {
                     case 0: //консультант
 
+                        Client temp = Consultant.EditeTelefonClient(telefon, editClient.Owner);
+
+                        if (temp.IsValid == false) 
+                        
+                        {
+                            MWindow.ViewModel.ShowStatusBarText(temp.Error);
+                        }
+
                         editClient.Owner = Consultant.EditeTelefonClient(telefon, editClient.Owner);
 
                        // CurrentClient.Owner = Consultant.EditeTelefonClient(telefon, editClient.Owner);
